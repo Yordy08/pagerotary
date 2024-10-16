@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
 
             const result = await collection.insertOne(noticia);
 
-            if (result) {
+            if (result.insertedId) {
                 return {
                     statusCode: 201,
                     body: JSON.stringify({ Message: 'Noticia creada' }),
