@@ -4,7 +4,7 @@ export interface Noticia {
     _id: ObjectId;
     titulo: string;
     contenido: string;
-    autor: string;
+    imagen?: string;
+    estado: 'activo' | 'inactivo';
     fechaPublicacion: Date;
-    imagenUrl?: string;
 }

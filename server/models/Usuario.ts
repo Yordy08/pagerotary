@@ -5,5 +5,8 @@ export interface Usuario {
     nombre: string;
     correo: string;
     contraseña: string;
+    telefono: string;
     fechaCreacion: Date;
+    estado: 'activo' | 'inactivo' | 'retirado';
+    rol: 'admin' | 'usuario' | 'editor';
 }
