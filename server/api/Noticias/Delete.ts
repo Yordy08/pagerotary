@@ -17,33 +17,26 @@ export default defineEventHandler(async (event) => {
             if (result.deletedCount === 1) {
                 return {
                     statusCode: 200,
-                    body: JSON.stringify({ Message: 'Noticia eliminada' }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                    body: { Message: 'Noticia eliminada' }
                 };
             } else {
                 return {
                     statusCode: 404,
-                    body: JSON.stringify({ Message: 'Noticia no encontrada' }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                    body: { Message: 'Noticia no encontrada' }
                 };
             }
+        } else {
+            throw createError({
+                statusCode: 405,
+                statusMessage: 'Method Not Allowed',
+            });
+
         }
-        throw createError({
-            statusCode: 405,
-            statusMessage: 'Method Not Allowed',
-        });
 
     } catch (error) {
         return {
             statusCode: 500,
-            body: JSON.stringify({ Message: 'Error interno del servidor', Error: error }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            body: { Message: 'Error interno del servidor', Error: error }
         };
     }
 });

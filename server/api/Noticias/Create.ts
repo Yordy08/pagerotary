@@ -6,8 +6,8 @@ export default defineEventHandler(async (event) => {
 
     try {
         if (event.method === 'POST') {
-            const body = await readBody(event);
-            const noticia: Noticia = JSON.parse(body);
+            
+            const noticia: Noticia = await readBody(event);
 
             const client = await connect();
             const db = await getDatabase(client);
@@ -17,34 +17,28 @@ export default defineEventHandler(async (event) => {
 
             if (result.insertedId) {
                 return {
-                    statusCode: 201,
-                    body: JSON.stringify({ Message: 'Noticia creada' }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                  statusCode: 201,
+                  Message: 'Noticia creada'
                 };
-            } else {
-                return {
-                    statusCode: 500,
-                    body: JSON.stringify({ Message: 'Error al crear la noticia' }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                };
-            }
+              } else {
+                throw createError({
+                  statusCode: 500,
+                  statusMessage: 'Error al crear la noticia'
+                });
+              }
+        }else{
+            throw createError({
+                statusCode: 405,
+                statusMessage: 'Method Not Allowed',
+            });
         }
-        throw createError({
-            statusCode: 405,
-            statusMessage: 'Method Not Allowed',
-        });
+        
 
     } catch (error) {
         return {
             statusCode: 500,
-            body: JSON.stringify({ Message: 'Error interno del servidor', Error: error }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            body: { Message: 'Error interno del servidor', Error: error },
+        
         };
     }
 });

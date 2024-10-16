@@ -13,25 +13,20 @@ export default defineEventHandler(async (event) => {
 
             return {
                 statusCode: 200,
-                body: JSON.stringify(noticias),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                body: noticias,
             };
+        } else {
+            throw createError({
+                statusCode: 405,
+                statusMessage: 'Method Not Allowed',
+            });
         }
-        
-        throw createError({
-            statusCode: 405,
-            statusMessage: 'Method Not Allowed',
-        });
+
 
     } catch (error) {
         return {
             statusCode: 500,
-            body: JSON.stringify({ Message: 'Error interno del servidor', Error: error }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            body: { Message: 'Error interno del servidor', Error: error }
         };
     }
 });
