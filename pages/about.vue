@@ -1,13 +1,11 @@
-..<template>
+<template>
   <h1>
-    abaut
+    about
   </h1>
 </template>
 
-<script>
-export default {
+<script setup>
 
-}
 </script>
 
 <style>
