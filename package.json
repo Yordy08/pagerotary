@@ -12,6 +12,7 @@
   "dependencies": {
     "bootstrap": "^5.3.3",
     "cloudinary": "^2.5.1",
+    "h3-formidable": "^1.0.0",
     "mongodb": "^6.9.0",
     "nuxt": "^3.13.0",
     "typed.js": "^2.1.0",
