@@ -1,43 +1,42 @@
 import { defineEventHandler, readBody } from "h3";
-import { Noticia } from "../../models/Noticia";
+import { Evento } from "../../models/Evento";
 import { connect, getDatabase, getCollection } from '../../utils/mongodb';
 
 export default defineEventHandler(async (event) => {
     try {
-        if (event.method === 'PUT') {
-            const noticia: Noticia = await readBody(event);
+        if (event.method === 'DELETE') {
+
+            const { _id } = await readBody(event);
 
             const client = await connect();
             const db = await getDatabase(client);
-            const collection = await getCollection<Noticia>(db, 'noticias');
+            const collection = await getCollection<Evento>(db, 'eventos');
 
-            const result = await collection.updateOne(
-                { _id: noticia._id },
-                { $set: noticia }
-            );
+            const result = await collection.deleteOne({ _id: _id });
 
-            if (result.modifiedCount > 0) {
+            if (result.deletedCount === 1) {
                 return {
                     statusCode: 200,
-                    body: { Message: 'Noticia actualizada' }
+                    body: { Message: 'Evento eliminado' }
                 };
             } else {
                 return {
                     statusCode: 404,
-                    body:{ Message: 'Noticia no encontrada' }
+                    body: { Message: 'Evento no encontrado' }
                 };
             }
-        }else{
+        } else {
             throw createError({
                 statusCode: 405,
                 statusMessage: 'Method Not Allowed',
             });
+
         }
 
     } catch (error) {
         return {
             statusCode: 500,
-            body:{ Message: 'Error interno del servidor', Error: error }
+            body: { Message: 'Error interno del servidor', Error: error }
         };
     }
 });

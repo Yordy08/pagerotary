@@ -1,33 +1,33 @@
-import { defineEventHandler, readBody } from "h3";
-import { Noticia } from "../../models/Noticia";
+import { defineEventHandler, readBody, createError } from "h3";
+import { Comentario } from "../../models/Comentario";
 import { connect, getDatabase, getCollection } from '../../utils/mongodb';
 
 export default defineEventHandler(async (event) => {
     try {
         if (event.method === 'PUT') {
-            const noticia: Noticia = await readBody(event);
+            const comentario: Comentario = await readBody(event);
 
             const client = await connect();
             const db = await getDatabase(client);
-            const collection = await getCollection<Noticia>(db, 'noticias');
+            const collection = await getCollection<Comentario>(db, 'comentarios');
 
             const result = await collection.updateOne(
-                { _id: noticia._id },
-                { $set: noticia }
+                { _id: comentario._id },
+                { $set: comentario }
             );
 
             if (result.modifiedCount > 0) {
                 return {
                     statusCode: 200,
-                    body: { Message: 'Noticia actualizada' }
+                    body: { Message: 'Comentario actualizado' }
                 };
             } else {
                 return {
                     statusCode: 404,
-                    body:{ Message: 'Noticia no encontrada' }
+                    body: { Message: 'Comentario no encontrado' }
                 };
             }
-        }else{
+        } else {
             throw createError({
                 statusCode: 405,
                 statusMessage: 'Method Not Allowed',
@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
     } catch (error) {
         return {
             statusCode: 500,
-            body:{ Message: 'Error interno del servidor', Error: error }
+            body: { Message: 'Error interno del servidor', Error: error }
         };
     }
 });
