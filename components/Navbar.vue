@@ -11,7 +11,8 @@
         <i class="fas fa-bars" :class="{ active: isActive }"></i>
       </div>
       <ul class="menu" :class="{ active: isActive }">
-        <li><a href="#" class="menu-btn">Admin</a></li>
+        <NuxtLink to="/dashboard">Admin</NuxtLink>
+      
         <li><a href="index.html" class="menu-btn">Inicio</a></li>
         <li><a href="data.html" class="menu-btn">Datos</a></li>
         <li><a href="#teams" class="menu-btn">Personajes</a></li>
