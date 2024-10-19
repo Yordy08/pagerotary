@@ -25,15 +25,15 @@
       <!-- Ocultar widgets si currentView no es null -->
       <section class="widgets" v-if="!currentView">
         <div class="widget" @click="changeView('ventas')">
-          <h2>Ventas</h2>
+          <h2>Noticias</h2>
           <p>$5,000</p>
         </div>
         <div class="widget" @click="changeView('usuarios')">
-          <h2>Usuarios</h2>
+          <h2>Propuestas</h2>
           <p>1,200</p>
         </div>
         <div class="widget" @click="changeView('pedidos')">
-          <h2>Pedidos</h2>
+          <h2>Usuarios</h2>
           <p>320</p>
         </div>
       </section>
