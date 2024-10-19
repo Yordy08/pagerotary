@@ -1,6 +1,7 @@
 import { defineEventHandler, readBody, createError } from "h3";
 import { Usuario } from "../../models/Usuario";
 import { connect, getDatabase, getCollection } from '../../utils/mongodb';
+import { ObjectId } from "mongodb";
 
 export default defineEventHandler(async (event) => {
     try {
@@ -19,7 +20,7 @@ export default defineEventHandler(async (event) => {
             const db = await getDatabase(client);
             const collection = await getCollection<Usuario>(db, 'usuarios');
 
-            const result = await collection.updateOne({ _id:_id}, { $set: updateData });
+            const result = await collection.updateOne( { _id: new ObjectId(usuario._id) }, { $set: updateData });
 
             if (result.modifiedCount > 0) {
                 return {
