@@ -7,10 +7,8 @@ export default defineEventHandler(async (event) => {
     try {
         if (event.method === 'POST') {
             const usuario: Usuario = await readBody(event);
-
-            // Encrypt the password
-            const saltRounds = 10;
-            usuario.contraseña = await bcrypt.hash(usuario.contraseña, saltRounds);
+           
+            usuario.contraseña = await bcrypt.hash(usuario.contraseña, 10);
 
             const client = await connect();
             const db = await getDatabase(client);

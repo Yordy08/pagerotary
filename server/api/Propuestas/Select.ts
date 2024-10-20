@@ -1,22 +1,19 @@
 import { defineEventHandler, createError } from "h3";
-import { Comentario } from "../../models/Comentario";
+import { Propuesta } from "../../models/Propuesta";
 import { connect, getDatabase, getCollection } from '../../utils/mongodb';
-import { ObjectId } from "mongodb";
 
 export default defineEventHandler(async (event) => {
     try {
-        if (event.method === 'POST') {
-            const comentario: Comentario = await readBody(event);
-            const { propuestaId }= comentario;
+        if (event.method === 'GET') {
             const client = await connect();
             const db = await getDatabase(client);
-            const collection = await getCollection<Comentario>(db, 'comentarios');
+            const collection = await getCollection<Propuesta>(db, 'propuestas');
 
-            const comentarios = await collection.find({propuestaId}).toArray();
+            const propuestas = await collection.find({}).toArray();
 
             return {
                 statusCode: 200,
-                body: comentarios,
+                body: propuestas,
             };
         } else {
             throw createError({

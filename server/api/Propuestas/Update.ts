@@ -1,29 +1,29 @@
-import { defineEventHandler, readBody } from "h3";
-import { Comentario } from "../../models/Comentario";
+import { defineEventHandler, readBody, createError } from "h3";
+import { Propuesta } from "../../models/Propuesta";
 import { connect, getDatabase, getCollection } from '../../utils/mongodb';
 import { ObjectId } from "mongodb";
 
 export default defineEventHandler(async (event) => {
     try {
-        if (event.method === 'DELETE') {
-
-            const { _id } = await readBody(event);
+        if (event.method === 'PUT') {
+            const Propuesta: Propuesta = await readBody(event);
+            const { _id, usuarioId, ...UpdataData } = Propuesta;
 
             const client = await connect();
             const db = await getDatabase(client);
-            const collection = await getCollection<Comentario>(db, 'comentarios');
+            const collection = await getCollection<Propuesta>(db, 'propuestas');
 
-            const result = await collection.deleteOne({ _id: new ObjectId(_id) });
+            const result = await collection.updateOne( { _id: new ObjectId(_id) }, { $set: UpdataData });
 
-            if (result.deletedCount === 1) {
+            if (result.modifiedCount > 0) {
                 return {
                     statusCode: 200,
-                    body: { Message: 'Comentario eliminado' }
+                    body: { Message: 'Propuesta actualizada' }
                 };
             } else {
                 return {
                     statusCode: 404,
-                    body: { Message: 'Comentario no encontrado' }
+                    body: { Message: 'Propuesta no encontrada' }
                 };
             }
         } else {
@@ -31,7 +31,6 @@ export default defineEventHandler(async (event) => {
                 statusCode: 405,
                 statusMessage: 'Method Not Allowed',
             });
-
         }
 
     } catch (error) {

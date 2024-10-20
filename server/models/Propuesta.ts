@@ -1,5 +1,7 @@
+import { ObjectId } from "mongodb";
+
 export interface Propuesta {
-    id: string;
+    _id: ObjectId;
     usuarioId: string;
     votos: number;
     titulo: string;

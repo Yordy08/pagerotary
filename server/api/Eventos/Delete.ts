@@ -1,6 +1,7 @@
 import { defineEventHandler, readBody } from "h3";
 import { Evento } from "../../models/Evento";
 import { connect, getDatabase, getCollection } from '../../utils/mongodb';
+import { ObjectId } from "mongodb";
 
 export default defineEventHandler(async (event) => {
     try {
@@ -12,7 +13,7 @@ export default defineEventHandler(async (event) => {
             const db = await getDatabase(client);
             const collection = await getCollection<Evento>(db, 'eventos');
 
-            const result = await collection.deleteOne({ _id: _id });
+            const result = await collection.deleteOne({ _id: new ObjectId(_id) });
 
             if (result.deletedCount === 1) {
                 return {

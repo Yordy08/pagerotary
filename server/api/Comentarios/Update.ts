@@ -1,20 +1,19 @@
 import { defineEventHandler, readBody, createError } from "h3";
 import { Comentario } from "../../models/Comentario";
 import { connect, getDatabase, getCollection } from '../../utils/mongodb';
+import { ObjectId } from "mongodb";
 
 export default defineEventHandler(async (event) => {
     try {
         if (event.method === 'PUT') {
             const comentario: Comentario = await readBody(event);
+            const {_id, ...UpdateData}= comentario;
 
             const client = await connect();
             const db = await getDatabase(client);
             const collection = await getCollection<Comentario>(db, 'comentarios');
 
-            const result = await collection.updateOne(
-                { _id: comentario._id },
-                { $set: comentario }
-            );
+            const result = await collection.updateOne({ _id: new ObjectId(_id) }, { $set: UpdateData } );
 
             if (result.modifiedCount > 0) {
                 return {

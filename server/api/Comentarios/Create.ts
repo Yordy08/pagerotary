@@ -2,6 +2,8 @@ import { defineEventHandler, readBody } from "h3";
 import { Comentario } from "../../models/Comentario";
 import { connect, getDatabase, getCollection } from '../../utils/mongodb';
 import { ObjectId } from "mongodb";
+import { Propuesta } from "~/server/models/Propuesta";
+import { Usuario } from "~/server/models/Usuario";
 
 export default defineEventHandler(async (event) => {
     try {
@@ -25,18 +27,24 @@ export default defineEventHandler(async (event) => {
         const client = await connect();
         const db = await getDatabase(client);
         const collection = await getCollection<Comentario>(db, 'comentarios');
-        const collectionUser = await getCollection(db, 'usuarios');
-        const collectionPropuesta = await getCollection(db, 'propuestas');
+        const collectionUser = await getCollection<Usuario>(db, 'usuarios');
+        const collectionPropuesta =  await getCollection<Propuesta>(db, 'propuestas');
 
         const user = await collectionUser.findOne({ _id: new ObjectId(usuarioId) });
-
         if (!user) {
             return {
                 statusCode: 404,
-                body: { Message: 'Usuario no encontrado' }
+                body: { Message: 'Usuario no encontrada' }
             };
         }
 
+        const propuesta = await collectionPropuesta.findOne({_id:new ObjectId(propuestaId)})
+        if (!propuesta) {
+            return {
+                statusCode: 404,
+                body: { Message: 'Propuesta no encontrada' }
+            };
+        }
         const result = await collection.insertOne(comentario);
 
         if (result.insertedId) {
