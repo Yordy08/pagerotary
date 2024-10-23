@@ -28,7 +28,6 @@ export default defineEventHandler(async (event) => {
 
             // Delete related documents from other collections
             await Promise.all([
-                colectionEvent.deleteMany({ userId: _id }),
                 colectionPropuesta.deleteMany({ usuarioId: _id }),
                 colectionComentario.deleteMany({ usuarioId: _id })
             ]);
