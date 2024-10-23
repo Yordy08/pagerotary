@@ -71,6 +71,22 @@
   <NewssliderEvento /> <!-- Incluir el slider aquí -->
 </center>
 
+
+<section class="ubicacion-section">
+  <div class="ubicacion-mapa">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50276.706221738!2d-75.92316984209992!3d8.760546270245136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e5a2fe5a57031ad%3A0x92e1cbad2ed7c0a0!2zTW9udGVyw61hLCBDw7NyZG9iYQ!5e1!3m2!1ses-419!2sco!4v1729721465454!5m2!1ses-419!2sco" width="100%" height="300"   style="border:0;"  allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+  
+  <div class="ubicacion-descripcion">
+    <h2>Ubicación de la Fundación</h2>
+    <p>Nos encontramos en Montería, ayudamos a las personas con diversas necesidades a través de programas de apoyo comunitario. Nuestra fundación trabaja en conjunto con la comunidad para impulsar el bienestar y el desarrollo de la región.</p>
+    <p>Ven a visitarnos y conoce más sobre nuestros proyectos y cómo puedes involucrarte.</p>
+  </div>
+</section>
+
+
+
  
 <!-- redes sociales -->
   <section class="contact">

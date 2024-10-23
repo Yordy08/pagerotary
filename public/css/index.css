@@ -718,3 +718,53 @@ sistema de .donaciones
     
     /* Sección se mantiene visible sin cambios en la opacidad */
 }
+
+
+
+
+@keyframes fadeInSlide {
+    0% {
+      opacity: 0;
+      transform: translateX(-50px); /* Desliza desde la izquierda */
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0); /* Posición final */
+    }
+  }
+  
+  .ubicacion-section {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* 12 columnas */
+    gap: 20px; /* Espacio entre columnas */
+    margin: 20px 0;
+  }
+  
+  .ubicacion-mapa {
+    grid-column: span 6; /* Ocupa 6 columnas */
+  }
+  
+  .ubicacion-descripcion {
+    grid-column: span 6; /* Ocupa 6 columnas */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    animation: fadeInSlide 1s ease-out; /* Aplicar animación */
+  }
+  
+  .ubicacion-descripcion h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    animation: fadeInSlide 1s ease-out; /* Aplicar animación */
+  }
+  
+  .ubicacion-descripcion p {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    animation: fadeInSlide 1.5s ease-out; /* Aplicar animación con retraso */
+  }
+  
