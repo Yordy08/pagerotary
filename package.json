@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.6.0",
+    "@pinia/nuxt": "^0.5.5",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",
@@ -19,6 +20,7 @@
     "mongodb": "^6.9.0",
     "nodemailer": "^6.9.15",
     "nuxt": "^3.13.2",
+    "pinia": "^2.2.4",
     "swiper": "^11.1.14",
     "typed.js": "^2.1.0",
     "vue": "latest",

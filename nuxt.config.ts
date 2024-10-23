@@ -1,7 +1,13 @@
 export default defineNuxtConfig({
+  modules: [
+    // ...
+    '@pinia/nuxt',
+  ],
   runtimeConfig: {
     public: {
     MONGODB_URI: 'mongodb+srv://yordisdurango:zFgn8AsIBTI1rw03@cluster0.y6f8p.mongodb.net/',
+    //MONGODB_URI: 'mongodb://localhost:27017',
+
     //credenciales cloudinary
     CLOUDINARY_CLOUD_NAME: 'dn4xdl2v5',
     CLOUDINARY_API_KEY: '357585198847445',
@@ -13,7 +19,7 @@ export default defineNuxtConfig({
     PUBLIC_URL: 'http://localhost:3000'
     }
   },
-
+ 
   routeRules: {
     '/': { prerender: true },
     '/api/*': { prerender: true },
