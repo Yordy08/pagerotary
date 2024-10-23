@@ -7,5 +7,5 @@ export interface Evento {
     descripcion: string;
     fecha: Date;
     ubicacion: string;
-    userId: string;
+    /* userId: string; */
 }

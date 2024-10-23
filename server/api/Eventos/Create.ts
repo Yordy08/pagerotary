@@ -7,12 +7,12 @@ export default defineEventHandler(async (event) => {
     try {
         if (event.method === 'POST') {
             const evento: Evento = await readBody(event);
-            const { userId} = evento;
+            /* const { userId} = evento; */
             
             const client = await connect();
             const db = await getDatabase(client);
             const collection = await getCollection<Evento>(db, 'eventos');
-            const collectionUser = await getCollection(db, 'usuarios');
+           /*  const collectionUser = await getCollection(db, 'usuarios');
             
             const user = await collectionUser.findOne({ _id: new ObjectId(userId) });
 
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
                     statusCode: 404,
                     body: { Message: 'Usuario no encontrado' }
                 };
-            }
+            } */
 
 
             const result = await collection.insertOne(evento);

@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     try {
         if (event.method === 'PUT') {
             const evento: Evento = await readBody(event);
-            const { _id, userId,...updateData } = evento;
+            const { _id,...updateData } = evento;
 
             const client = await connect();
             const db = await getDatabase(client);
