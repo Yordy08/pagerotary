@@ -7,6 +7,7 @@ interface LoginData {
 
 export async function loginUser(data: LoginData)  {
     const userStore = useUserStore();
+   console.log(data)
 
     try {
         const response = await fetch('/api/Usuarios/Login', {
@@ -25,8 +26,10 @@ export async function loginUser(data: LoginData)  {
         if(user.usuario){
             userStore.setUser(user.usuario);
         }
+        console.log(user)
         return user;
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
     }
+
 }
