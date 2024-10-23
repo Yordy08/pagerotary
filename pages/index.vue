@@ -7,13 +7,18 @@
   <section class="home" id="home">
     <div class="max-width">
       <div class="home-content">
-        <div class="text-1">Hola, somos buenaesa.co</div>
+        <div class="text-1">Hola, somos Rostary Montería Ronda del Sinú</div>
         <div class="text-2">Bienvenidos</div>
         <div class="text-3">Estamos cargados <br>de <span class="typing"></span></div>
         <a href="#about">Acerca de</a>
       </div>
     </div>
   </section>
+
+  <section class="home" id="home">
+      <!-- ... tu contenido ... -->
+    </section>
+    <NewsSlider /> <!-- Incluir el slider aquí -->
 
   <!-- about section start -->
   <section class="about" id="about">
@@ -34,6 +39,29 @@
     </div>
   </section>
  
+  <section class="grid">
+    <div class="donaciones">
+        <h2>Realiza una Donación</h2>
+        <p>Tu apoyo es crucial para continuar con nuestra labor. Contribuye a nuestra causa y ayúdanos a hacer la diferencia.</p>
+        <button class="donar-btn">Donar</button>
+    </div>
+    <div class="programas-activos">
+
+        <h2>Programas Activos</h2>
+        <ul>
+            <li>Programa de Educación para Niños</li>
+            <li>Asistencia Alimentaria</li>
+            <li>Talleres de Capacitación</li>
+        </ul>
+        <a href="">
+          <button class="donar-btn">Ver  más</button>
+
+        </a>
+        
+    </div>
+</section>
+
+
  
   <!-- contact section start -->
   <section class="contact" id="contact">
@@ -126,6 +154,10 @@
 
 
 <script setup>
+
+import Navbar from '~/components/Navbar.vue';
+import NewsSlider from '~/components/NewsSlider.vue';
+import Footer from '~/components/Footer.vue';
 import { onMounted, onBeforeUnmount } from 'vue';
 import Typed from 'typed.js';
 

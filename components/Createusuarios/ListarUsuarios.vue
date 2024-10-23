@@ -1,11 +1,14 @@
 <template>
   <div class="container mt-5">
+
+
+    
     <h1 class="mb-4">Lista de Usuarios</h1>
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
         <tbody>
           <tr v-for="usuario in usuarios" :key="usuario.id" :style="{ backgroundColor: '#F2A922' }">
-
+           
             <td>
               <strong>Nombre:</strong> {{ usuario.nombre }}
             </td>
@@ -82,6 +85,7 @@
 
 <script>
 export default {
+  name: "Listar",
   data() {
     return {
       usuarios: [],

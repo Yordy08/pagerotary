@@ -81,7 +81,7 @@
     methods: {
       async fetchEventos() {
         try {
-          const response = await fetch('http://localhost:3000/api/Eventos/Select', {
+          const response = await fetch('/api/Eventos/Select', {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',

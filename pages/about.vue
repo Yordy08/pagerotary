@@ -1,19 +1,4 @@
 <template>
-  <h1>
-    about
-  </h1>
-</template>
-
-<script setup>
-
-</script>
-
-<style>
-
-</style>
-
-<!-- En tu componente Vue -->
-<!-- <template>
   <form @submit.prevent="submit">
     <input type="file" @change="selectFile" />
     <button type="submit">Subir Imagen</button>
@@ -40,4 +25,4 @@ const submit = async () => {
 
   const data = await response.json()
   console.log('->:', data)
-} </script> -->
+} </script>

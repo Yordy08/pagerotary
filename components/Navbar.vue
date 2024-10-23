@@ -11,12 +11,13 @@
         <i class="fas fa-bars" :class="{ active: isActive }"></i>
       </div>
       <ul class="menu" :class="{ active: isActive }">
-        <NuxtLink to="/dashboard">Admin</NuxtLink>
+        <NuxtLink class="a" to="/dashboard">Admin</NuxtLink>
       
+
         <li><a href="index.html" class="menu-btn">Inicio</a></li>
-        <li><a href="data.html" class="menu-btn">Datos</a></li>
-        <li><a href="#teams" class="menu-btn">Personajes</a></li>
-        <li><a href="galery.html" class="menu-btn">Imágenes</a></li>
+        <li><a href="data.html" class="menu-btn">Programas</a></li>
+        <li><a href="#teams" class="menu-btn">Noticias</a></li>
+        <li><a href="galery.html" class="menu-btn">Eventos</a></li>
         <li><a href="#contact" class="menu-btn">Contactos</a></li>
       </ul>
     </div>
@@ -42,12 +43,16 @@ const toggleMenu = () => {
   padding: 30px 0;
   font-family: 'Ubuntu', sans-serif;
   transition: all 0.3s ease;
+  border-color: #000000;
+ 
 }
 
 .navbar.sticky {
-  padding: 15px 0;
-  background: #114cf065;
+  padding: 7px 0;
+  background: linear-gradient(70deg, #ffffff,#2BA0D9); /* Degradado horizontal */
+  border-bottom: 3px solid #F2A922; /* Borde inferior */
 }
+
 
 .navbar .max-width {
   display: flex;
@@ -69,7 +74,14 @@ const toggleMenu = () => {
 .navbar.sticky .logo a span {
   color: #fff;
 }
-
+.navbar li a{
+  text-decoration: none;
+  color: #ffffff;
+}
+.a {
+  text-decoration: none;
+  color:#ffffff;
+}
 .navbar .menu {
   display: flex; /* Mostrar menú como flexbox en desktop */
   list-style: none; /* Quitar marcadores de lista */
@@ -84,7 +96,8 @@ const toggleMenu = () => {
 
 .navbar .menu li a {
   display: block;
-  color: #fff;
+  color: #ffffff;
+  
   font-size: 18px;
   font-weight: 500;
   margin-left: 25px;

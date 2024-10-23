@@ -71,7 +71,7 @@ section .title::after{
     bottom: -8px;
     left: 50%;
     font-size: 20px;
-    color: #F21651;
+    color: #F2921D;
     padding: 0 5px;
     background: #fff;
     transform: translateX(-50%);
@@ -80,16 +80,35 @@ section .title::after{
 
 
 /* home section styling */
-.home{
+.home {
     display: flex;
-    background: url(https://img.freepik.com/foto-gratis/jovenes-relajandose-juntos_23-2151561975.jpg?t=st=1728146945~exp=1728150545~hmac=f2e0a0fd72303dc8d6d8c60ce15717dd2ba86b9c0a6988a54fad55afeb31ae7a&w=900) no-repeat center;
-    height: 100vh;
+    position: relative; /* Asegúrate de que el contenedor tenga posición relativa */
+    height: 30vh;
     color: #fff;
-    min-height: 500px;
+    min-height: 300px;
+    background: url(https://img.freepik.com/foto-gratis/jovenes-relajandose-juntos_23-2151561975.jpg?t=st=1728146945~exp=1728150545~hmac=f2e0a0fd72303dc8d6d8c60ce15717dd2ba86b9c0a6988a54fad55afeb31ae7a&w=900) no-repeat center;
     background-size: cover;
     background-attachment: fixed;
     font-family: 'Ubuntu', sans-serif;
 }
+
+.home::before {
+    content: ''; /* Necesario para crear el pseudo-elemento */
+    position: absolute; /* Coloca el pseudo-elemento sobre el contenedor */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit; /* Hereda la imagen de fondo */
+    filter: blur(5px); /* Ajusta el nivel de desenfoque */
+    z-index: 1; /* Coloca el pseudo-elemento detrás del contenido */
+}
+
+.home > * {
+    position: relative; /* Asegúrate de que el contenido se muestre sobre el pseudo-elemento */
+    z-index: 2; /* Eleva el contenido sobre el desenfoque */
+}
+
 .home .max-width{
   width: 100%;
   display: flex;
@@ -97,8 +116,14 @@ section .title::after{
 .home .max-width .row{
   margin-right: 0;
 }
+
+
+
+
+
 .home .home-content .text-1{
     font-size: 27px;
+    margin-top: 80px; /* Ajusta el valor según sea necesario */
 }
 .home .home-content .text-2{
     font-size: 75px;
@@ -110,29 +135,29 @@ section .title::after{
     margin: 5px 0;
 }
 .home .home-content .text-3 span{
-    color:#F21651;
+    color:#F2921D;
     font-weight: 500;
 }
 .home .home-content a{
     display: inline-block;
-    background: #F21651;
+    background: #F2921D;
     color: #fff;
     font-size: 25px;
     padding: 12px 36px;
     margin-top: 20px;
     font-weight: 400;
     border-radius: 6px;
-    border: 2px solid #F21651;
+    border: 2px solid #F2921D;
     transition: all 0.3s ease;
 }
 .home .home-content a:hover{
-    color: #F21651;
+    color: #F2921D;
     background: none;
 }
 
 /* about section styling */
 .about .title::after{
-    content: "Rotary Montería";
+    content: "Rotary ";
 }
 .about .about-content .left{
     width: 45%;
@@ -152,25 +177,25 @@ section .title::after{
     margin-bottom: 10px;
 }
 .about .about-content .right .text span{
-    color: #F21651;
+    color: #F2921D;
 }
 .about .about-content .right p{
     text-align: justify;
 }
 .about .about-content .right a{
     display: inline-block;
-    background: #F21651;
+    background: #F2921D;
     color: #fff;
     font-size: 20px;
     font-weight: 500;
     padding: 10px 30px;
     margin-top: 20px;
     border-radius: 6px;
-    border: 2px solid #F21651;
+    border: 2px solid #F2921D;
     transition: all 0.3s ease;
 }
 .about .about-content .right a:hover{
-    color: #F21651;
+    color: #F2921D;
     background: none;
 }
 
@@ -186,7 +211,7 @@ section .title::after{
 .services .title::after,
 .teams .title::after{
     background: #111;
-    content: "Rotary Montería";
+    content: "Rotary";
 }
 .services .serv-content .card{
     width: calc(33% - 20px);
@@ -198,7 +223,7 @@ section .title::after{
     transition: all 0.3s ease;
 }
 .services .serv-content .card:hover{
-    background: #F21651;
+    background: #F2921D;
 }
 .services .serv-content .card .box{
     transition: all 0.3s ease;
@@ -208,7 +233,7 @@ section .title::after{
 }
 .services .serv-content .card i{
     font-size: 50px;
-    color: #F21651;
+    color: #F2921D;
     transition: color 0.3s ease;
 }
 .services .serv-content .card:hover i{
@@ -223,7 +248,7 @@ section .title::after{
 /* skills section styling */
 
 .skills .title::after{
-    content: "Rotary Montería";
+    content: "Rotary";
 }
 .skills .skills-content .column{
     width: calc(50% - 30px);
@@ -238,18 +263,18 @@ section .title::after{
 }
 .skills .skills-content .left a{
     display: inline-block;
-    background: #F21651;
+    background: #F2921D;
     color: #fff;
     font-size: 18px;
     font-weight: 500;
     padding: 8px 16px;
     margin-top: 20px;
     border-radius: 6px;
-    border: 2px solid #F21651;
+    border: 2px solid #F2921D;
     transition: all 0.3s ease;
 }
 .skills .skills-content .left a:hover{
-    color: #F21651;
+    color: #F2921D;
     background: none;
 }
 .skills .skills-content .right .bars{
@@ -297,7 +322,7 @@ section .title::after{
 
 /* teams section styling */
 .teams .title::after{
-    content: "Rotary Montería";
+    content: "Rotary";
 }
 .teams .carousel .card{
     background: #0D0D0D;
@@ -308,7 +333,7 @@ section .title::after{
     transition: all 0.3s ease;
 }
 .teams .carousel .card:hover{
-    background:#F21651;
+    background:#F2921D;
 }
 .teams .carousel .card .box{
     display: flex;
@@ -330,7 +355,7 @@ section .title::after{
     width: 150px;
     object-fit: cover;
     border-radius: 50%;
-    border: 5px solid #F21651;
+    border: 5px solid #F2921D;
     transition: all 0.3s ease;
 }
 .teams .carousel .card:hover img{
@@ -346,7 +371,7 @@ section .title::after{
     margin: 0 5px;
     outline: none!important;
     border-radius: 50%;
-    border: 2px solid#F21651!important;
+    border: 2px solid#F2921D!important;
     transition: all 0.3s ease;
 }
 .owl-dot.active{
@@ -355,12 +380,12 @@ section .title::after{
 }
 .owl-dot.active,
 .owl-dot:hover{
-    background: #F21651!important;
+    background: #F2921D!important;
 }
 
 /* contact section styling */
 .contact .title::after{
-    content: "Rotary Montería ";
+    content: "Rotary ";
 }
 .contact .contact-content .column{
     width: calc(50% - 30px);
@@ -386,7 +411,7 @@ section .title::after{
 }
 .contact .contact-content .row i{
     font-size: 25px;
-    color: #F21651;
+    color: #F2921D;
 }
 .contact .contact-content .info .head{
     font-weight: 500;
@@ -445,14 +470,14 @@ section .title::after{
   border-radius: 6px;
   cursor: pointer;
   flex-wrap: nowrap;
-  background: #F21651;
-  border: 2px solid #F21651;
+  background: #F2921D;
+  border: 2px solid #F2921D;
   transition: all 0.3s ease;
 }
 
 
 .right form .button-area button:hover{
-  color: #F21651;
+  color: #F2921D;
   background: none;
 }
 /* footer section styling */
@@ -463,7 +488,7 @@ footer{
     text-align: center;
 }
 footer span a{
-    color:#F21651;
+    color:#F2921D;
     text-decoration: none;
 }
 footer span a:hover{
@@ -500,6 +525,7 @@ footer span a:hover{
         top: 0;
         background: #665873;
         text-align: center;
+    
         padding-top: 80px;
         transition: all 0.3s ease;
     }
@@ -521,11 +547,11 @@ footer span a:hover{
         font-size: 35px;
     }
     .home .home-content a{
-        font-size: 23px;
+        font-size: 20px;
         padding: 10px 30px;
     }
     .max-width{
-        max-width: 930px;
+        max-width: 900px;
     }
     .about .about-content .column{
         width: 100%;
@@ -596,4 +622,99 @@ footer span a:hover{
         font-size: 23px;
         line-height: 38px;
     }
+}
+
+/* 
+sistema de .donaciones
+
+ */
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 40px 30px;
+    background-color: #e7e1e1;
+}
+
+.donaciones,
+.programas-activos {
+    flex: 0 0 48%; /* Cada sección ocupa casi la mitad del contenedor */
+    box-sizing: border-box;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: white; /* Fondo blanco para destacar las secciones */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 30px 10px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    opacity: 1; /* Asegúrate de que sean visibles desde el principio */
+    transform: translateY(0); /* Sin transformación inicial */
+    transition: all 0.3s ease; /* Transición suave */
+}
+
+/* Animación de entrada */
+.grid {
+    animation: fadeIn 0.5s forwards; /* Animación para el contenedor */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.donaciones h2,
+.programas-activos h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.donaciones p {
+    margin-bottom: 20px;
+    color: #34495e;
+}
+
+.donar-btn {
+    padding: 10px 20px;
+    background-color: #019fcb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Transiciones para el botón */
+}
+
+.donar-btn:hover {
+    background-color: #F2A922;
+    transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+}
+
+.programas-activos ul {
+    list-style-type: none; /* Sin viñetas */
+    padding: 0; /* Sin padding */
+}
+
+.programas-activos li {
+    margin-bottom: 10px; /* Espacio entre programas */
+    color: #34495e;
+    transition: color 0.3s; /* Transición suave para el texto de programas */
+}
+
+.programas-activos li:hover {
+    color: #27ae60; /* Cambia de color al pasar el ratón */
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 768px) {
+    .donaciones,
+    .programas-activos {
+        flex: 0 0 100%; /* Cada sección ocupará el 100% del ancho */
+    }
+    
+    /* Sección se mantiene visible sin cambios en la opacidad */
 }
