@@ -43,7 +43,7 @@ const toggleMenu = () => {
   position: fixed;
   width: 100%;
   z-index: 999;
-  padding: -10px 0;
+  padding: 40px 0;
   font-family: 'Ubuntu', sans-serif;
   transition: all 0.3s ease;
   border-color: #000000;

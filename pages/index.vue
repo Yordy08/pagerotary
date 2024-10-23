@@ -1,5 +1,6 @@
 <template>
  <div class="html">
+  <Navbar />
   <nav class="nuevonav">
   <div class="segundonav">
     <a href="#" class="navbar-brand">Registrar</a>
@@ -7,7 +8,7 @@
   </div>
 
 </nav>
-  <Navbar />
+  
   <!-- home section start -->
   <section class="home" id="home">
     <div class="max-width">

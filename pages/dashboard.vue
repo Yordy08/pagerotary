@@ -1,11 +1,6 @@
 <template>
  
   <div class="dashboard">
-
-    <div>
-   
-    </div>
-    
     <nav class="sidebar">
       <ul>
         <li><NuxtLink to="/">Inicio</NuxtLink></li>
