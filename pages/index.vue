@@ -2,7 +2,6 @@
  <div class="html">
 
   <Navbar />
-
   <!-- home section start -->
   <section class="home" id="home">
     <div class="max-width">
@@ -18,6 +17,7 @@
   <section class="home" id="home">
       <!-- ... tu contenido ... -->
     </section>
+
     <NewsSlider /> <!-- Incluir el slider aquí -->
 
   <!-- about section start -->
@@ -60,7 +60,9 @@
         
     </div>
 </section>
-
+<center>
+  <NewssliderEvento /> <!-- Incluir el slider aquí -->
+</center>
 
  
   <!-- contact section start -->
@@ -157,6 +159,7 @@
 
 import Navbar from '~/components/Navbar.vue';
 import NewsSlider from '~/components/NewsSlider.vue';
+import NewssliderEvento from '~/components/NewssliderEvento.vue';
 import Footer from '~/components/Footer.vue';
 import { onMounted, onBeforeUnmount } from 'vue';
 import Typed from 'typed.js';

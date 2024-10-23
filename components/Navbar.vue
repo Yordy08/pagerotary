@@ -12,12 +12,12 @@
       </div>
       <ul class="menu" :class="{ active: isActive }">
         <NuxtLink class="a" to="/dashboard">Admin</NuxtLink>
-      
-
+    
         <li><a href="index.html" class="menu-btn">Inicio</a></li>
         <li><a href="data.html" class="menu-btn">Programas</a></li>
         <li><a href="#teams" class="menu-btn">Noticias</a></li>
         <li><a href="galery.html" class="menu-btn">Eventos</a></li>
+        <li><a href="galery.html" class="menu-btn">Propuestas</a></li>
         <li><a href="#contact" class="menu-btn">Contactos</a></li>
       </ul>
     </div>
