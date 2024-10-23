@@ -1,6 +1,12 @@
 <template>
  <div class="html">
+  <nav class="nuevonav">
+  <div class="segundonav">
+    <a href="#" class="navbar-brand">Registrar</a>
+    <a href="#" class="navbar-link">Iniciar</a>
+  </div>
 
+</nav>
   <Navbar />
   <!-- home section start -->
   <section class="home" id="home">
@@ -65,56 +71,6 @@
 </center>
 
  
-  <!-- contact section start -->
-  <section class="contact" id="contact">
-    <div class="max-width">
-      <h2 class="title">Contactanos</h2>
-      <div class="contact-content">
-        <div class="column left">
-          <div class="text">Ponte en contacto con nosotros</div>
-          <p>Estaremos esparndo su respuesta </p>
-          <div class="icons">
-            <div class="row">
-              <i class="fas fa-user"></i>
-              <div class="info">
-                <div class="head">Nombre</div>
-                <div class="sub-title">Buenaesa.co</div>
-              </div>
-            </div>
-            <div class="row">
-              <i class="fas fa-map-marker-alt"></i>
-              <div class="info">
-                <div class="head">Ubicacion</div>
-                <div class="sub-title">null</div>
-              </div>
-            </div>
-            <div class="row">
-              <i class="fas fa-envelope"></i>
-              <div class="info">
-                <div class="head">Correo</div>
-                <div class="sub-title">buenaesa.co@gmail.com</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column right">
-          <div class="text">Envíanos un mensaje</div>
-          <form action="#">
-            <div class="button-area">
-              <a href="#"><button type="button"
-                  onclick="alert('Hola! Yordy esta programando esta funcion ¿lo esperas🤷‍♂️?');">Actuar</button></a>
-              <br>
-
-            </div>
-          </form>
-        </div>
-
-      </div>
-
-      <!-- Redes Social -->
-
-    </div>
-  </section>
 <!-- redes sociales -->
   <section class="contact">
     <div class="max-width">
@@ -232,5 +188,27 @@ onBeforeUnmount(() => {
 <style scoped>
 @import '~/public/css/index.css';
 
+.nuevonav{
+  padding: 7px 0;
+  background: linear-gradient(70deg, #ffffff,#2BA0D9); /* Degradado horizontal */
+  border-bottom: 3px solid #F2A922; /* Borde inferior */
+
+}
+.segundonav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: -4px; /* Espacio entre los elementos */
+  }
+
+  .navbar-brand {
+    margin-right: 30px; /* Alinea 'Brand' a la izquierda */
+  }
+ 
+  .navbar-link {
+    text-decoration: none;
+    margin-right: 40px; 
+    color: black;
+  }
 
 </style>
