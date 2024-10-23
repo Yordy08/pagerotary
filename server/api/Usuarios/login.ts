@@ -1,10 +1,14 @@
 import { defineEventHandler, readBody, createError } from "h3";
 import bcrypt from "bcrypt";
-import { Usuario } from "../../models/Usuario";
-import { connect, getDatabase, getCollection } from '../../utils/mongodb';
+import { Usuario } from "~/server/models/Usuario";
+import { connect, getDatabase, getCollection } from '~/server/utils/mongodb';
+
+interface login {
+    correo: string,
+    contraseña: string
+}
 
 export default defineEventHandler(async (event) => {
-
     try {
         if (event.method !== 'POST') {
             throw createError({
@@ -13,7 +17,8 @@ export default defineEventHandler(async (event) => {
             });
         }
 
-        const { correo, contraseña } = await readBody(event);
+        const { correo, contraseña } = await readBody<login>(event);
+        
 
         if (!correo || !contraseña) {
             return {
@@ -22,11 +27,24 @@ export default defineEventHandler(async (event) => {
             };
         }
 
-        const client = await connect();
+        let client;
+        try {
+            client = await connect();
+        } catch (connectionError) {
+            console.error('Error connecting to the database:', connectionError);
+            return {
+                statusCode: 500,
+                message: 'Error connecting to the database',
+                error: connectionError,
+            };
+        }
+
         const db = await getDatabase(client);
         const collection = await getCollection<Usuario>(db, 'usuarios');
 
         const usuario = await collection.findOne({ correo });
+        
+
         if (!usuario) {
             return {
                 statusCode: 401,
@@ -49,7 +67,7 @@ export default defineEventHandler(async (event) => {
         };
 
     } catch (error) {
-
+        console.error('Internal server error:', error);
         return {
             statusCode: 500,
             message: 'Error interno del servidor',
