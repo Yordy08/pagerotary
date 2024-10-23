@@ -215,17 +215,33 @@ onBeforeUnmount(() => {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: -4px; /* Espacio entre los elementos */
+    gap: 0; /* Espacio entre los elementos */
   }
 
   .navbar-brand {
-    margin-right: 30px; /* Alinea 'Brand' a la izquierda */
+    margin-right: 5px; /* Alinea 'Brand' a la izquierda */
+    display: block;
+  color: #ffffff;
+  
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 25px;
+  transition: color 0.3s ease;
   }
  
   .navbar-link {
     text-decoration: none;
     margin-right: 40px; 
     color: black;
+    display: block;
+  color: #ffffff;
+  
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 25px;
+  transition: color 0.3s ease;
   }
+
+
 
 </style>
