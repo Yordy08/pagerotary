@@ -3,9 +3,9 @@
   <Navbar />
   <nav class="nuevonav">
     <div class="segundonav">
-      <a href="#" class="navbar-brand">Registrar</a>
-      <a href="#" class="navbar-link">Iniciar</a>
-      <CerrarSesion />
+      <NuxtLink to="/registrar" class="navbar-brand">Registrar</NuxtLink>
+      <NuxtLink to="/dashboard" class="navbar-link">Iniciar</NuxtLink>
+     
     </div>
   </nav>
 
@@ -135,7 +135,7 @@
 import Navbar from '~/components/Navbar.vue';
 import NewsSlider from '~/components/NewsSlider.vue';
 import NewssliderEvento from '~/components/NewssliderEvento.vue';
-import CerrarSesion from '~/components/CerrarSesion.vue';
+
 import Footer from '~/components/Footer.vue';
 import { onMounted, onBeforeUnmount } from 'vue';
 import Typed from 'typed.js';
@@ -208,7 +208,7 @@ onBeforeUnmount(() => {
 <style scoped>
 @import '~/public/css/index.css';
 .nuevonav {
-  padding: 7px 0;
+  padding: 1px 0;
   background: linear-gradient(70deg, #ffffff, #2BA0D9); /* Degradado horizontal */
   border-bottom: 3px solid #F2A922; /* Borde inferior */
   position: relative; /* Asegura que z-index funcione */
@@ -219,7 +219,7 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 20px; /* Espacio entre los elementos */
+  gap: 0px; /* Espacio entre los elementos */
   z-index: 1001; /* Lleva este contenedor aún más adelante */
 }
 

@@ -1,17 +1,33 @@
 <template>
- 
   <div class="dashboard">
     <nav class="sidebar">
       <ul>
         <li><NuxtLink to="/">Inicio</NuxtLink></li>
         <CerrarSesion />
-        <li><a href="#" @click="changeView('perfil')">Perfil</a></li>
-        <li><a href="#" @click="changeView('noticias')">Noticias</a></li>
-        <li><a href="#" @click="changeView('eventos')">Eventos</a></li>
-        <li><a href="#" @click="changeView('propuestas')">Propuestas</a></li>
-        <li><a href="#" @click="logout" >Logout</a></li>
+        <li v-if="isUser || isAdmin">
+          <!-- Visible para usuarios y admin -->
+          <a href="#" @click="changeView('propuestas')">Propuestas</a>
+        </li>
+        <li v-if="isEditor || isAdmin">
+          <!-- Visible para editor y admin -->
+          <a href="#" @click="changeView('noticias')">Noticias</a>
+        </li>
+        <li v-if="isEditor || isAdmin">
+          <!-- Visible para editor y admin -->
+          <a href="#" @click="changeView('eventos')">Eventos</a>
+        </li>
+        <li v-if="isEditor || isAdmin">
+          <!-- Visible para editor y admin -->
+          <a href="#" @click="changeView('tienda')">Tienda</a>
+        </li>
+        <li v-if="isAdmin">
+          <!-- Solo visible para admin -->
+          <a href="#" @click="changeView('perfil')">Perfil</a>
+        </li>
+        <li>
+          <a class="fas fa-sign-out-alt" href="#" @click="logout">Salir</a>
+        </li>
       </ul>
-      
     </nav>
 
     <div class="main-content">
@@ -21,15 +37,15 @@
 
       <!-- Ocultar widgets si currentView no es null -->
       <section class="widgets" v-if="!currentView">
-        <div class="widget" @click="changeView('ventas')">
+        <div class="widget" @click="changeView('noticias')">
           <h2>Noticias</h2>
           <p>$5,000</p>
         </div>
-        <div class="widget" @click="changeView('usuarios')">
+        <div class="widget" @click="changeView('propuestas')">
           <h2>Propuestas</h2>
           <p>1,200</p>
         </div>
-        <div class="widget" @click="changeView('pedidos')">
+        <div v-if="isEditor || isAdmin" class="widget" @click="changeView('usuarios')">
           <h2>Usuarios</h2>
           <p>320</p>
         </div>
@@ -44,27 +60,29 @@
       <div class="floating-menu" v-if="isMobile">
         <button @click="toggleMenu" class="menu-btn">☰</button>
         <ul v-if="menuVisible" class="floating-items">
-          <li @click="changeView('perfil')">Usuarios</li>
-          <li @click="changeView('noticias')">Noticias</li>
-          <li @click="changeView('eventos')">Eventos</li>
-          <li @click="changeView('propuestas')">Propuestas</li>
+          <li v-if="isAdmin" @click="changeView('perfil')">Perfil</li>
+          <li v-if="isEditor || isAdmin" @click="changeView('noticias')">Noticias</li>
+          <li v-if="isEditor || isAdmin" @click="changeView('eventos')">Eventos</li>
+          <li v-if="isEditor || isAdmin" @click="changeView('tienda')">Tienda</li>
+          <li v-if="isUser || isAdmin" @click="changeView('propuestas')">Propuestas</li>
         </ul>
       </div>
     </div>
   </div>
 </template>
+
 <script>
-import CerrarSesion from '~/components/CerrarSesion.vue';
 import PerfilView from '~/components/PerfilView.vue';
 import EventosView from '~/components/EventosView.vue';
 import NoticiasView from '~/components/NoticiasView.vue';
 import PropuestaView from '~/components/PropuestaView.vue';
-import {useUserStore} from '~/store/main';
+import TiendaView from '~/components/TiendaView.vue'; // Importa la vista de Tienda
+import { useUserStore } from '~/store/main';
 
 export default {
   data() {
     return {
-      currentView: null,  // Maneja la vista actual
+      currentView: null, // Maneja la vista actual
       menuVisible: false, // Controla la visibilidad del menú flotante
       isMobile: false,    // Variable para detectar si es móvil
     };
@@ -73,7 +91,22 @@ export default {
     PerfilView,
     EventosView,
     NoticiasView,
-    PropuestaView
+    PropuestaView,
+    TiendaView,  // Añade la vista de Tienda
+  },
+  computed: {
+    userStore() {
+      return useUserStore();
+    },
+    isUser() {
+      return this.userStore.user && this.userStore.user.rol === 'usuario';
+    },
+    isEditor() {
+      return this.userStore.user && this.userStore.user.rol === 'editor';
+    },
+    isAdmin() {
+      return this.userStore.user && this.userStore.user.rol === 'admin';
+    },
   },
   mounted() {
     // Detecta el tamaño de la pantalla al cargar la página
@@ -85,10 +118,9 @@ export default {
     window.removeEventListener('resize', this.checkIfMobile);
   },
   methods: {
-    logout(){
+    logout() {
       const userStore = useUserStore();
       userStore.clearUser();
-  
     },
     checkIfMobile() {
       // Si el ancho de la ventana es menor o igual a 768px, considera que es móvil
@@ -103,16 +135,18 @@ export default {
       } else if (view === 'noticias') {
         this.currentView = 'NoticiasView';
       } else if (view === 'propuestas') {
-        this.currentView = 'PropuestaView'; // Nombre del componente corregido
+        this.currentView = 'PropuestaView';
+      } else if (view === 'tienda') {
+        this.currentView = 'TiendaView';  // Vista de Tienda para editores y admin
       }
       this.menuVisible = false; // Oculta el menú después de seleccionar una vista
     },
     toggleMenu() {
       // Alterna la visibilidad del menú flotante
       this.menuVisible = !this.menuVisible;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 

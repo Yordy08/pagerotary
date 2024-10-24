@@ -13,7 +13,7 @@
       <ul class="menu" :class="{ active: isActive }">
         <NuxtLink v-if="isLoggedIn" class="a" to="/dashboard">Admin</NuxtLink> <!-- Solo visible si el usuario está logueado -->
         
-        <li><a href="index.html"  class="menu-btn">Inicio</a></li>
+        <li><a href="index.html" class="menu-btn">Inicio</a></li>
         <li><a href="data.html" class="menu-btn">Programas</a></li>
         <li><a href="#teams" class="menu-btn">Noticias</a></li>
         <li><a href="galery.html" class="menu-btn">Eventos</a></li>
@@ -48,7 +48,7 @@ const isLoggedIn = computed(() => userStore.user !== null); // Computed que indi
   position: fixed;
   width: 100%;
   z-index: 999;
-  padding: 40px 0;
+  padding: 60px 0;
   font-family: 'Ubuntu', sans-serif;
   transition: all 0.3s ease;
   border-color: #000000;
