@@ -5,6 +5,7 @@
   <div class="segundonav">
     <a href="#" class="navbar-brand">Registrar</a>
     <a href="#" class="navbar-link">Iniciar</a>
+    <CerrarSesion />
   </div>
 
 </nav>
@@ -133,6 +134,7 @@
 import Navbar from '~/components/Navbar.vue';
 import NewsSlider from '~/components/NewsSlider.vue';
 import NewssliderEvento from '~/components/NewssliderEvento.vue';
+import CerrarSesion from '~/components/CerrarSesion.vue';
 import Footer from '~/components/Footer.vue';
 import { onMounted, onBeforeUnmount } from 'vue';
 import Typed from 'typed.js';
