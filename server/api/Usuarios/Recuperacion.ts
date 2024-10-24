@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
 
         // Send email with reset link using nodemailer
         await transporter.sendMail({
-            from: config.public.CORREO,
+            from: config.CORREO,
             to: usuario.correo,
             subject: "Recuperación de contraseña",
             html: `

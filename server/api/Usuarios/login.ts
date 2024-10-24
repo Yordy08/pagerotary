@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
         }
 
         const { correo, contraseña }  = await readBody<login>(event);
-        console.log(correo)
+    
 
         if (!correo || !contraseña) {
             return {
