@@ -4,6 +4,7 @@
     <nav class="sidebar">
       <ul>
         <li><NuxtLink to="/">Inicio</NuxtLink></li>
+        <CerrarSesion />
         <li><a href="#" @click="changeView('perfil')">Perfil</a></li>
         <li><a href="#" @click="changeView('noticias')">Noticias</a></li>
         <li><a href="#" @click="changeView('eventos')">Eventos</a></li>
@@ -52,6 +53,7 @@
   </div>
 </template>
 <script>
+import CerrarSesion from '~/components/CerrarSesion.vue';
 import PerfilView from '~/components/PerfilView.vue';
 import EventosView from '~/components/EventosView.vue';
 import NoticiasView from '~/components/NoticiasView.vue';
