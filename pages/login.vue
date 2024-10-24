@@ -1,8 +1,11 @@
 <template>
     <div class="container">
         <div class="form-container">
-            <div>
-                <h2 class="title">Sign in to your account</h2>
+            <div v-if="!recuperarEstado">
+                <h2 class="title">Iniciar Sesión</h2>
+            </div>
+            <div v-else>
+                <h2 class="title">Recuperar cuenta</h2>
             </div>
             <form class="form" @submit.prevent="login" v-if="!recuperarEstado">
                 <div class="input-group">
@@ -22,6 +25,11 @@
                         Sign in
                     </button>
                 </div>
+                <div class="boton-recuprer">
+                    <button type="button"  @click="recuperarEstado = true">
+                        Recuperar cuenta
+                    </button>
+                </div>
             </form>
             <form class="form" @submit.prevent="recuperarUser" v-else>
                 <div class="input-group">
@@ -34,7 +42,7 @@
                 </div>
                 <div>
                     <button type="submit" class="submit-button">
-                        Sign in
+                        Recuperar
                     </button>
                 </div>
             </form>
@@ -72,8 +80,10 @@ const recuperarUser = async () => {
         const response = await recuperarCount(emailRecuperar.value);
         if (response.message === 'Correo de recuperación enviado exitosamente') {
             alert('Correo enviado');
+            emailRecuperar.value = '';
+            recuperarEstado.value = false;
         } else {
-            alert('Correo no enviado: ' + response);
+            alert('Correo no enviado: ' + response.error.message);
         }
     } catch (error) {
         alert('An error occurred: ' + error);
@@ -82,6 +92,18 @@ const recuperarUser = async () => {
 </script>
 
 <style scoped>
+.boton-recuprer {
+    display: flex;
+    justify-content: flex-end;
+  
+}
+.boton-recuprer button {
+    border: none;
+    background-color: transparent;
+    color: rgb(46, 150, 185);
+    cursor: pointer;
+  
+}
 .container {
     min-height: 100vh;
     display: flex;
