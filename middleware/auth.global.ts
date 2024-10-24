@@ -4,7 +4,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   // Check if running on client-side
     const store = useUserStore()
 
-    const token = store.user
+    const token = store.getUser()
 
     
     // Only block access to the dashboard route if there's no token

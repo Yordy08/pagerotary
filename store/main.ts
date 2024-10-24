@@ -14,29 +14,36 @@ export interface Usuario {
 export const useUserStore = defineStore('user', {
     state: () => {
       return {
-        // for initially empty lists
-        userList: [] as Usuario[],
-        // for data that is not yet loaded
         user: null as Usuario | null,
       }
     },
     actions: {
-        saveUser(newUser: Usuario) {
-            this.userList.push(newUser);
-            
-        },
-        removeUser(userId: string) {
-            this.userList = this.userList.filter(user => user._id !== userId);
-           
-        },
+      
         setUser(user: Usuario) {
             this.user = user;
+            if (import.meta.client) {
+                localStorage.setItem('user', JSON.stringify(user));
+            }
         },
         clearUser() {
             this.user = null;
+            if (import.meta.client) {
+                localStorage.removeItem('user');
+            }
+        },
+        getUser() {
+            if (import.meta.client) {
+            const user = localStorage.getItem('user');
+            if (user) {
+                this.user = JSON.parse(user);
+                return this.user;
+            }
+        }
         }
     }
   })
+
+ 
 
 
 

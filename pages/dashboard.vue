@@ -8,6 +8,7 @@
         <li><a href="#" @click="changeView('noticias')">Noticias</a></li>
         <li><a href="#" @click="changeView('eventos')">Eventos</a></li>
         <li><a href="#" @click="changeView('propuestas')">Propuestas</a></li>
+        <li><a href="#" @click="logout" >Logout</a></li>
       </ul>
       
     </nav>
@@ -56,6 +57,7 @@ import PerfilView from '~/components/PerfilView.vue';
 import EventosView from '~/components/EventosView.vue';
 import NoticiasView from '~/components/NoticiasView.vue';
 import PropuestaView from '~/components/PropuestaView.vue';
+import {useUserStore} from '~/store/main';
 
 export default {
   data() {
@@ -81,6 +83,11 @@ export default {
     window.removeEventListener('resize', this.checkIfMobile);
   },
   methods: {
+    logout(){
+      const userStore = useUserStore();
+      userStore.clearUser();
+  
+    },
     checkIfMobile() {
       // Si el ancho de la ventana es menor o igual a 768px, considera que es móvil
       this.isMobile = window.innerWidth <= 768;

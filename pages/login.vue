@@ -4,7 +4,7 @@
             <div>
                 <h2 class="title">Sign in to your account</h2>
             </div>
-            <form class="form" @submit.prevent="login">
+            <form class="form" @submit.prevent="login" v-if="!recuperarEstado">
                 <div class="input-group">
                     <div>
                         <label for="email-address" class="sr-only">Email address</label>
@@ -23,12 +23,27 @@
                     </button>
                 </div>
             </form>
+            <form class="form" @submit.prevent="recuperarUser" v-else>
+                <div class="input-group">
+                    <div>
+                        <label for="email-address" class="sr-only">Email de recuperación</label>
+                        <input id="email-address" name="email" type="email" autocomplete="email" required
+                            class="input" placeholder="Email address" v-model="emailRecuperar">
+                    </div>
+                    
+                </div>
+                <div>
+                    <button type="submit" class="submit-button">
+                        Sign in
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </template>
 
 <script setup>
-import {loginUser} from '~/store/Action'
+import {loginUser, recuperarCount} from '~/store/Action'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -36,17 +51,32 @@ const email = ref('')
 const password = ref('')
 const router = useRouter()
 
+const emailRecuperar = ref('')
+const recuperarEstado = ref(false)
+
 const login = async () => {
     try {
         const response = await loginUser({ correo: email.value, contraseña: password.value });
-        if (response.usuario) {
-        
+        if (response.message === 'Login exitoso') {
            await router.push('/dashboard');
         } else {
             alert('Login failed: ' + response.message);
         }
     } catch (error) {
         alert('An error occurred: ' + error.message);
+    }
+};
+
+const recuperarUser = async () => {
+    try {
+        const response = await recuperarCount(emailRecuperar.value);
+        if (response.message === 'Correo de recuperación enviado exitosamente') {
+            alert('Correo enviado');
+        } else {
+            alert('Correo no enviado: ' + response);
+        }
+    } catch (error) {
+        alert('An error occurred: ' + error);
     }
 };
 </script>
