@@ -2,13 +2,14 @@
  <div class="html">
   <Navbar />
   <nav class="nuevonav">
-  <div class="segundonav">
-    <a href="#" class="navbar-brand">Registrar</a>
-    <a href="#" class="navbar-link">Iniciar</a>
-    <CerrarSesion />
-  </div>
+    <div class="segundonav">
+      <a href="#" class="navbar-brand">Registrar</a>
+      <a href="#" class="navbar-link">Iniciar</a>
+      <CerrarSesion />
+    </div>
+  </nav>
 
-</nav>
+
   
   <!-- home section start -->
   <section class="home" id="home">
@@ -206,44 +207,31 @@ onBeforeUnmount(() => {
 
 <style scoped>
 @import '~/public/css/index.css';
-
-.nuevonav{
+.nuevonav {
   padding: 7px 0;
-  background: linear-gradient(70deg, #ffffff,#2BA0D9); /* Degradado horizontal */
-  border-bottom: 3px solid #F2A922; /* Borde inferior */
-
+  background: linear-gradient(70deg, #ffffff, #2BA0D9); /* Degradado horizontal */
+  border-bottom: 3px solid #F2A922; /* Borde inferior */
+  position: relative; /* Asegura que z-index funcione */
+  z-index: 1000; /* Lleva este elemento al frente */
 }
+
 .segundonav {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 0; /* Espacio entre los elementos */
-  }
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px; /* Espacio entre los elementos */
+  z-index: 1001; /* Lleva este contenedor aún más adelante */
+}
 
-  .navbar-brand {
-    margin-right: 5px; /* Alinea 'Brand' a la izquierda */
-    display: block;
+.navbar-brand, .navbar-link {
   color: #ffffff;
-  
   font-size: 18px;
   font-weight: 500;
-  margin-left: 25px;
+  padding: 10px 20px; /* Aumenta la zona clicable */
+  text-decoration: none; /* Sin subrayado */
   transition: color 0.3s ease;
-  }
- 
-  .navbar-link {
-    text-decoration: none;
-    margin-right: 40px; 
-    color: black;
-    display: block;
-  color: #ffffff;
-  
-  font-size: 18px;
-  font-weight: 500;
-  margin-left: 25px;
-  transition: color 0.3s ease;
-  }
-
-
+  position: relative;
+  z-index: 1002; /* Asegura que el botón sea clicable */
+}
 
 </style>

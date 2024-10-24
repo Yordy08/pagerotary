@@ -11,9 +11,9 @@
         <i class="fas fa-bars" :class="{ active: isActive }"></i>
       </div>
       <ul class="menu" :class="{ active: isActive }">
-        <NuxtLink class="a" to="/dashboard">Admin</NuxtLink>
-    
-        <li><a href="index.html" class="menu-btn">Inicio</a></li>
+        <NuxtLink v-if="isLoggedIn" class="a" to="/dashboard">Admin</NuxtLink> <!-- Solo visible si el usuario está logueado -->
+        
+        <li><a href="index.html"  class="menu-btn">Inicio</a></li>
         <li><a href="data.html" class="menu-btn">Programas</a></li>
         <li><a href="#teams" class="menu-btn">Noticias</a></li>
         <li><a href="galery.html" class="menu-btn">Eventos</a></li>
@@ -25,14 +25,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useUserStore } from '~/store/main'; // Asegúrate de ajustar la ruta según tu estructura
 
 const isActive = ref(false);
-
 const toggleMenu = () => {
   isActive.value = !isActive.value;
 };
+
+// Accedemos a la store para verificar si hay un usuario logueado
+const userStore = useUserStore();
+const isLoggedIn = computed(() => userStore.user !== null); // Computed que indica si hay usuario logueado
 </script>
+
 
 <style scoped>
 /* navbar styling */
