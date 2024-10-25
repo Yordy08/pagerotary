@@ -3,7 +3,7 @@
   <Navbar />
   <nav class="nuevonav">
     <div class="segundonav">
-      <NuxtLink to="/registrar" class="navbar-brand">Registrar</NuxtLink>
+      <NuxtLink to="/crear-usuario" class="navbar-brand">Registrar</NuxtLink>
       <NuxtLink to="/dashboard" class="navbar-link">Iniciar</NuxtLink>
      
     </div>
