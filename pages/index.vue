@@ -4,7 +4,7 @@
   <nav class="nuevonav">
     <div class="segundonav">
       <NuxtLink to="/crear-usuario" class="navbar-brand">Registrar</NuxtLink>
-      <NuxtLink to="/dashboard" class="navbar-link">Iniciar</NuxtLink>
+      <NuxtLink to="/login" class="navbar-link">Iniciar</NuxtLink>
      
     </div>
   </nav>
@@ -87,7 +87,9 @@
   </div>
 </section>
 
-
+<center>
+  <NewsSliderPropuestas /> <!-- Incluir el slider aquí -->
+</center>
 
  
 <!-- redes sociales -->
@@ -135,6 +137,7 @@
 import Navbar from '~/components/Navbar.vue';
 import NewsSlider from '~/components/NewsSlider.vue';
 import NewssliderEvento from '~/components/NewssliderEvento.vue';
+import NewsSliderPropuestas from '~/components/NewsSliderPropuestas.vue';
 
 import Footer from '~/components/Footer.vue';
 import { onMounted, onBeforeUnmount } from 'vue';
