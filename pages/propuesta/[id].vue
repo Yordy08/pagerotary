@@ -4,6 +4,7 @@
         <p>{{ propuesta.descripcion }}</p>
         <p><strong>Ubicación:</strong> {{ propuesta.ubicacion }}</p>
         <p><strong>Votos:</strong> {{ propuesta.votos }} <input type="button" value="Votar" @click="updatePropuesta(propuesta)"  :disabled="!isAuthenticated"></p>
+        <p><strong>Autor:</strong> {{ propuesta.autor }}</p>
 
         <div class="comentarios">
             <h2>Comentarios</h2>
@@ -42,9 +43,9 @@ export default {
         const isAuthenticated = ref(false);
         const PropuestaId = route.params.id;
         const currentUser = userStore.getUser();
-        isAuthenticated.value = !!currentUser;
 
         onMounted(async () => {
+            isAuthenticated.value = !!currentUser;
             await getPropuesta(PropuestaId);
             await getComentarios(PropuestaId);
         });
