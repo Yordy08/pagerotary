@@ -3,7 +3,7 @@
         <h1>{{ propuesta.titulo }}</h1>
         <p>{{ propuesta.descripcion }}</p>
         <p><strong>Ubicación:</strong> {{ propuesta.ubicacion }}</p>
-        <p><strong>Votos:</strong> {{ propuesta.votos }}</p>
+        <p><strong>Votos:</strong> {{ propuesta.votos }} <input type="button" value="Votar" @click="updatePropuesta(propuesta)"  :disabled="!isAuthenticated"></p>
 
         <div class="comentarios">
             <h2>Comentarios</h2>
@@ -11,8 +11,12 @@
                 <p>{{ comentario.descripcion }}</p>
                 <p><strong>Likes:</strong> {{ comentario.like }}</p>
                 <p><strong>Usuario:</strong> {{ comentario.usuarioNombre }}</p>
-        
-                    <input type="button" name="likeButton" value="Like" @click="updateComentario(comentario)" :disabled="!isAuthenticated">
+
+                <input type="button" value="like" @click="updateComentario(comentario, 'Like')"
+                    :disabled="!isAuthenticated">
+                <input type="button" value="dislike" @click="updateComentario(comentario, 'disLike')"
+                    :disabled="!isAuthenticated">
+
             </div>
             <form @submit.prevent="submitComentario">
                 <textarea v-model="nuevoComentario.descripcion" placeholder="Escribe un comentario"
@@ -44,7 +48,7 @@ export default {
             await getPropuesta(PropuestaId);
             await getComentarios(PropuestaId);
         });
-       
+
         const getPropuesta = async (id) => {
             try {
                 const responsePropuesta = await fetch('/api/Propuestas/' + id, {
@@ -58,6 +62,39 @@ export default {
 
             } catch (error) {
                 console.error('Error al obtener propuesta:', error);
+            }
+        };
+        const updatePropuesta = async (propuesta) => {
+            if (!isAuthenticated.value) {
+                alert('Debes estar autenticado para votar.');
+                return;
+            }
+
+            if(Array.isArray(propuesta.UsuarioVoto)){
+                if (propuesta.UsuarioVoto.includes(currentUser._id)) {
+                    alert('Ya has votado por esta propuesta.');
+                    return;
+                }
+                propuesta.UsuarioVoto.push(currentUser._id);
+                propuesta.votos += 1;
+            }
+
+            try {
+                let response = await fetch('/api/Propuestas/Update', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(propuesta)
+                });
+                const data = await response.json();
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+                await getPropuesta(PropuestaId);
+            } catch (error) {
+                console.error('Error updating propuesta:', error);
             }
         };
         const getComentarios = async (id) => {
@@ -90,7 +127,7 @@ export default {
                 descripcion: nuevoComentario.value.descripcion,
                 like: nuevoComentario.value.like,
             };
-            
+
             try {
                 let response = await fetch('/api/Comentarios/Create', {
                     method: 'POST',
@@ -104,34 +141,32 @@ export default {
                     alert(data.error);
                     return;
                 }
-            await getComentarios(PropuestaId);
-                
+                await getComentarios(PropuestaId);
+
                 nuevoComentario.value.descripcion = '';
             } catch (error) {
                 console.error('Error creating comentario:', error);
             }
         };
-        
-        const updateComentario = async (comentario) => {
-            
+
+        const updateComentario = async (comentario, event) => {
+
             if (!isAuthenticated.value) {
                 alert('Debes estar autenticado para dar like.');
                 return;
             }
 
             if (Array.isArray(comentario.UsuarioLike)) {
-                if (comentario.UsuarioLike.includes(currentUser._id)) {
-                    
-                    return;
-                } else {
+                if (comentario.UsuarioLike.includes(currentUser._id) && event === 'disLike') {
+                    comentario.UsuarioLike = comentario.UsuarioLike.filter((id) => id !== currentUser._id);
+                    comentario.like -= 1;
+                } else if (!comentario.UsuarioLike.includes(currentUser._id) && event === 'Like') {
                     comentario.UsuarioLike.push(currentUser._id);
                     comentario.like += 1;
+                }else{
+                    return;
                 }
-            } else {
-                comentario.UsuarioLike = [currentUser._id];
-                comentario.like += 1;
             }
-        
 
             try {
                 let response = await fetch('/api/Comentarios/Update', {
@@ -153,7 +188,7 @@ export default {
             }
         };
 
-       
+
 
         return {
             propuesta,
@@ -161,6 +196,7 @@ export default {
             nuevoComentario,
             submitComentario,
             updateComentario,
+            updatePropuesta,
             isAuthenticated
         };
     }

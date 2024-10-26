@@ -8,9 +8,9 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
     
     // Only block access to the dashboard route if there's no token
-/*  if (!token && to.path.startsWith('/dashboard')) {
+ if (!token && to.path.startsWith('/dashboard')) {
       return navigateTo('/login')
-    }  */
+    }  
    
     // Prevent logged-in users from accessing the login page
     if (token && to.path === '/login') {
