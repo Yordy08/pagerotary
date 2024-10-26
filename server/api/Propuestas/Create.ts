@@ -8,7 +8,8 @@ export default defineEventHandler(async (event) => {
         if (event.method === 'POST') {
             const propuesta: Propuesta = await readBody(event);
             const { usuarioId } = propuesta;
-            
+            propuesta.UsuarioVoto = [];
+            propuesta.votos = 0;
             const client = await connect();
             const db = await getDatabase(client);
             const collection = await getCollection<Propuesta>(db, 'propuestas');

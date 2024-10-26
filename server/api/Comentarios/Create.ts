@@ -15,9 +15,11 @@ export default defineEventHandler(async (event) => {
         }
 
         const comentario: Comentario = await readBody(event);
-        const { usuarioId, propuestaId, descripcion, like } = comentario;
+        comentario.UsuarioLike = [];
+        comentario.like = 0;
+        const { usuarioId, propuestaId, descripcion,  usuarioNombre } = comentario;
 
-        if (!usuarioId || !propuestaId || !descripcion || like === undefined) {
+        if (!usuarioId || !propuestaId || !descripcion || !usuarioNombre) {
             return {
                 statusCode: 400,
                 body: { Message: 'Datos incompletos' }

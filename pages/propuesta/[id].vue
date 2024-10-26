@@ -11,13 +11,12 @@
                 <p>{{ comentario.descripcion }}</p>
                 <p><strong>Likes:</strong> {{ comentario.like }}</p>
                 <p><strong>Usuario:</strong> {{ comentario.usuarioNombre }}</p>
-                <label>
-                    <input type="checkbox" v-model="comentario.likeSwitch" @change="updateComentario(comentario)" :disabled="!isAuthenticated">
-                    Like
-                </label>
+        
+                    <input type="button" name="likeButton" value="Like" @click="updateComentario(comentario)" :disabled="!isAuthenticated">
             </div>
             <form @submit.prevent="submitComentario">
-                <textarea v-model="nuevoComentario.descripcion" placeholder="Escribe un comentario" :disabled="!isAuthenticated"></textarea>
+                <textarea v-model="nuevoComentario.descripcion" placeholder="Escribe un comentario"
+                    :disabled="!isAuthenticated"></textarea>
                 <button type="submit" :disabled="!isAuthenticated">Enviar</button>
             </form>
         </div>
@@ -37,11 +36,16 @@ export default {
         const route = useRoute();
         const userStore = useUserStore();
         const isAuthenticated = ref(false);
+        const PropuestaId = route.params.id;
+        const currentUser = userStore.getUser();
+        isAuthenticated.value = !!currentUser;
 
         onMounted(async () => {
-            const id = route.params.id;
-            isAuthenticated.value = !!userStore.getUser();
-
+            await getPropuesta(PropuestaId);
+            await getComentarios(PropuestaId);
+        });
+       
+        const getPropuesta = async (id) => {
             try {
                 const responsePropuesta = await fetch('/api/Propuestas/' + id, {
                     method: 'POST',
@@ -52,6 +56,12 @@ export default {
                 const dataPropuesta = await responsePropuesta.json();
                 propuesta.value = dataPropuesta.propuesta;
 
+            } catch (error) {
+                console.error('Error al obtener propuesta:', error);
+            }
+        };
+        const getComentarios = async (id) => {
+            try {
                 const responseComentarios = await fetch('/api/Comentarios/Select', {
                     method: 'POST',
                     headers: {
@@ -60,92 +70,90 @@ export default {
                     body: JSON.stringify({ propuestaId: id })
                 });
                 const dataComentarios = await responseComentarios.json();
-                
-                // Fetch user names for each comment
-                for (let comentario of dataComentarios.body) {
-                    const usuario = await fetchUsercomentarios(comentario.usuarioId);
-                    comentario.usuarioNombre = usuario.nombre;
-                    comentario.likeSwitch = comentario.like > 0; // Initialize likeSwitch
-                }
-                
-                comentarios.value = dataComentarios.body;
-                
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        });
 
+                comentarios.value = dataComentarios.body;
+
+            } catch (error) {
+                console.error('Error al obtener comentarios:', error);
+            }
+        };
         const submitComentario = async () => {
             if (!isAuthenticated.value) {
                 alert('Debes estar autenticado para comentar.');
                 return;
             }
 
-            const user = userStore.getUser();
-            const id = route.params.id;
-
             const comentario = {
-                usuarioId: user._id,
-                propuestaId: id,
+                usuarioId: currentUser._id,
+                usuarioNombre: currentUser.nombre,
+                propuestaId: PropuestaId,
                 descripcion: nuevoComentario.value.descripcion,
                 like: nuevoComentario.value.like,
-                usuarioNombre: user.nombre // Assuming the user object has a nombre property
             };
-            console.log('comentario:', comentario);
+            
             try {
-                await fetch('/api/Comentarios/Create', {
+                let response = await fetch('/api/Comentarios/Create', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(comentario)
                 });
-                comentarios.value.push(comentario);
+                const data = await response.json();
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+            await getComentarios(PropuestaId);
+                
                 nuevoComentario.value.descripcion = '';
             } catch (error) {
                 console.error('Error creating comentario:', error);
             }
         };
-
+        
         const updateComentario = async (comentario) => {
+            
             if (!isAuthenticated.value) {
                 alert('Debes estar autenticado para dar like.');
                 return;
             }
 
-            const updatedComentario = {
-                ...comentario,
-                like: comentario.likeSwitch ? comentario.like + 1 : comentario.like - 1
-            };
+            if (Array.isArray(comentario.UsuarioLike)) {
+                if (comentario.UsuarioLike.includes(currentUser._id)) {
+                    
+                    return;
+                } else {
+                    comentario.UsuarioLike.push(currentUser._id);
+                    comentario.like += 1;
+                }
+            } else {
+                comentario.UsuarioLike = [currentUser._id];
+                comentario.like += 1;
+            }
+        
 
             try {
-                await fetch('/api/Comentarios/Update', {
+                let response = await fetch('/api/Comentarios/Update', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(updatedComentario)
+                    body: JSON.stringify(comentario)
                 });
-                comentario.like = updatedComentario.like; // Update the like count in the local state
+                const data = await response.json();
+                console.log('data:', data);
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+                await getComentarios(PropuestaId);
             } catch (error) {
                 console.error('Error updating comentario:', error);
             }
         };
 
-        const fetchUsercomentarios = async (id) => {
-            try {
-                const response = await fetch('/api/Usuarios/' + id, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                const data = await response.json();
-                return data.Usuario;
-            } catch (error) {
-                console.error('Error al obtener comentarios:', error);
-            }
-        };
+       
 
         return {
             propuesta,
@@ -153,7 +161,6 @@ export default {
             nuevoComentario,
             submitComentario,
             updateComentario,
-            fetchUsercomentarios,
             isAuthenticated
         };
     }

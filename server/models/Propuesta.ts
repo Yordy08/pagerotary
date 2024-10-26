@@ -7,4 +7,5 @@ export interface Propuesta {
     titulo: string;
     descripcion: string;
     ubicacion: string;
+    UsuarioVoto?: string[];
 }

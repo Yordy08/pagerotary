@@ -6,4 +6,6 @@ export interface Comentario {
     propuestaId: string;
     descripcion: string;
     like: number;
+    usuarioNombre: string;
+    UsuarioLike?: string[];
 }
