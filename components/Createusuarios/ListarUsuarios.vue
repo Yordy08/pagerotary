@@ -1,14 +1,10 @@
 <template>
   <div class="container mt-5">
-
-
-    
     <h1 class="mb-4">Lista de Usuarios</h1>
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
         <tbody>
           <tr v-for="usuario in usuarios" :key="usuario.id" :style="{ backgroundColor: '#F2A922' }">
-           
             <td>
               <strong>Nombre:</strong> {{ usuario.nombre }}
             </td>
@@ -28,58 +24,55 @@
               <button class="btn btn-danger btn-sm" @click="deleteUsuario(usuario.id)">
                 <i class="fas fa-trash-alt"></i> Eliminar
               </button>
-              
-
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-   <!-- Modal para Actualizar Usuario -->
-<div v-if="showModal" class="modal-overlay">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title">Actualizar Usuario</h5>
-      <button type="button" class="close" @click="closeModal">
-        <span>&times;</span>
-      </button>
+    <!-- Modal para Actualizar Usuario -->
+    <div v-if="showModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Actualizar Usuario</h5>
+          <button type="button" class="close" @click="closeModal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form @submit.prevent="updateUsuario">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input v-model="usuarioForm.nombre" type="text" class="form-control" placeholder="Nombre" required />
+            </div>
+            <div class="form-group">
+              <label for="correo">Correo</label>
+              <input v-model="usuarioForm.correo" type="email" class="form-control" placeholder="Correo" required />
+            </div>
+            <div class="form-group">
+              <label for="contraseña">Contraseña</label>
+              <input v-model="usuarioForm.contraseña" type="password" class="form-control" placeholder="Contraseña" required />
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input v-model="usuarioForm.telefono" type="tel" class="form-control" placeholder="Teléfono" required />
+            </div>
+            <div class="form-group">
+              <label for="estado">Estado</label>
+              <input v-model="usuarioForm.estado" type="text" class="form-control" placeholder="Estado" required />
+            </div>
+            <div class="form-group">
+              <label for="rol">Rol</label>
+              <input v-model="usuarioForm.rol" type="text" class="form-control" placeholder="Rol" required />
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Actualizar</button>
+              <button type="button" class="btn btn-secondary" @click="closeModal">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="modal-body">
-      <form @submit.prevent="updateUsuario">
-        <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input v-model="usuarioForm.nombre" type="text" class="form-control" placeholder="Nombre" required />
-        </div>
-        <div class="form-group">
-          <label for="correo">Correo</label>
-          <input v-model="usuarioForm.correo" type="email" class="form-control" placeholder="Correo" required />
-        </div>
-        <div class="form-group">
-          <label for="contraseña">Contraseña</label>
-          <input v-model="usuarioForm.contraseña" type="password" class="form-control" placeholder="Contraseña" required />
-        </div>
-        <div class="form-group">
-          <label for="telefono">Teléfono</label>
-          <input v-model="usuarioForm.telefono" type="tel" class="form-control" placeholder="Teléfono" required />
-        </div>
-        <div class="form-group">
-          <label for="estado">Estado</label>
-          <input v-model="usuarioForm.estado" type="text" class="form-control" placeholder="Estado" required />
-        </div>
-        <div class="form-group">
-          <label for="rol">Rol</label>
-          <input v-model="usuarioForm.rol" type="text" class="form-control" placeholder="Rol" required />
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Actualizar</button>
-          <button type="button" class="btn btn-secondary" @click="closeModal">Cancelar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
   </div>
 </template>
 
@@ -107,23 +100,22 @@ export default {
   },
   methods: {
     async fetchUsuarios() {
-  try {
-    const response = await fetch('http://localhost:3000/api/Usuarios/Select', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const data = await response.json();
-    console.log(data); 
-    if (data && Array.isArray(data.body)) {
-      this.usuarios = data.body;
-    }
-  } catch (error) {
-    console.error('Error al obtener usuarios:', error);
-  }
-},
-
+      try {
+        const response = await fetch('http://localhost:3000/api/Usuarios/Select', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
+        console.log(data);
+        if (data && Array.isArray(data.body)) {
+          this.usuarios = data.body;
+        }
+      } catch (error) {
+        console.error('Error al obtener usuarios:', error);
+      }
+    },
 
     openModal(usuario) {
       this.usuarioForm = { ...usuario };
@@ -145,35 +137,33 @@ export default {
         rol: ''
       };
     },
-    
+
     async deleteUsuario(id) {
-  console.log("Intentando eliminar el usuario con ID:", id); 
-  
-  if (!id) {
-    console.error("ID del usuario es undefined. No se puede eliminar.");
-    return;
-  }
+      console.log("Intentando eliminar el usuario con ID:", id);
+      
+      if (!id) {
+        console.error("ID del usuario es undefined. No se puede eliminar.");
+        return;
+      }
 
-  try {
-    const response = await fetch(`http://localhost:3000/api/Usuarios/Delete/${id}`, {
-      method: 'DELETE',
-    });
+      try {
+        const response = await fetch(`http://localhost:3000/api/Usuarios/Delete/${id}`, {
+          method: 'DELETE',
+        });
 
-    console.log(`Respuesta del servidor: ${response.status} ${response.statusText}`);
-    
-    if (response.ok) {
-      console.log(`Usuario con ID: ${id} eliminado correctamente.`);
-      await this.fetchUsuarios();
-    } else {
-      const errorMessage = await response.text(); // O .json() si el mensaje está en formato JSON
-      console.error(`Error al eliminar el usuario. Código de estado: ${response.status}, Mensaje: ${response.statusText}, Detalle: ${errorMessage}`);
-    }
-  } catch (error) {
-    console.error('Error al intentar eliminar el usuario:', error);
-  }
-},
-
-
+        console.log(`Respuesta del servidor: ${response.status} ${response.statusText}`);
+        
+        if (response.ok) {
+          console.log(`Usuario con ID: ${id} eliminado correctamente.`);
+          await this.fetchUsuarios(); // Actualiza la lista de usuarios
+        } else {
+          const errorMessage = await response.text();
+          console.error(`Error al eliminar el usuario. Código de estado: ${response.status}, Mensaje: ${response.statusText}, Detalle: ${errorMessage}`);
+        }
+      } catch (error) {
+        console.error('Error al intentar eliminar el usuario:', error);
+      }
+    },
 
     async updateUsuario() {
       try {

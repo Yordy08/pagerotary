@@ -1,22 +1,41 @@
 <template>
     <div class="propuesta">
+        <Nav/>
+        <br>
+        <br>
+        <br>
+        <br>
         <h1>{{ propuesta.titulo }}</h1>
         <p>{{ propuesta.descripcion }}</p>
         <p><strong>Ubicación:</strong> {{ propuesta.ubicacion }}</p>
-        <p><strong>Votos:</strong> {{ propuesta.votos }} <input type="button" value="Votar" @click="updatePropuesta(propuesta)"  :disabled="!isAuthenticated"></p>
+        <p>
+    <strong>Reacciones:</strong> {{ propuesta.votos }} 
+    <button @click="updatePropuesta(propuesta)" :disabled="!isAuthenticated">
+        <i class="fas fa-heart"></i> <!-- Ícono de corazón para votar -->
+    </button>
+</p>
+
+
         <p><strong>Autor:</strong> {{ propuesta.autor }}</p>
 
         <div class="comentarios">
+
             <h2>Comentarios</h2>
             <div v-for="comentario in comentarios" :key="comentario._id" class="comentario">
+                <b>{{ comentario.usuarioNombre }}</b>
                 <p>{{ comentario.descripcion }}</p>
                 <p><strong>Likes:</strong> {{ comentario.like }}</p>
-                <p><strong>Usuario:</strong> {{ comentario.usuarioNombre }}</p>
+                
 
-                <input type="button" value="like" @click="updateComentario(comentario, 'Like')"
-                    :disabled="!isAuthenticated">
-                <input type="button" value="dislike" @click="updateComentario(comentario, 'disLike')"
-                    :disabled="!isAuthenticated">
+                <div>
+    <button @click="updateComentario(comentario, 'Like')" :disabled="!isAuthenticated">
+        <i class="fas fa-thumbs-up"></i> <!-- Ícono de pulgar hacia arriba -->
+    </button>
+    <button @click="updateComentario(comentario, 'disLike')" :disabled="!isAuthenticated">
+        <i class="fas fa-thumbs-down"></i> <!-- Ícono de pulgar hacia abajo -->
+    </button>
+</div>
+
 
             </div>
             <form @submit.prevent="submitComentario">
@@ -25,6 +44,13 @@
                 <button type="submit" :disabled="!isAuthenticated">Enviar</button>
             </form>
         </div>
+   <br>
+   <br>
+   <br>
+   <br>
+   <Footer/>
+
+
     </div>
 </template>
 
@@ -67,13 +93,13 @@ export default {
         };
         const updatePropuesta = async (propuesta) => {
             if (!isAuthenticated.value) {
-                alert('Debes estar autenticado para votar.');
+                alert('Debes estar autenticado para reaccionar.');
                 return;
             }
 
             if(Array.isArray(propuesta.UsuarioVoto)){
                 if (propuesta.UsuarioVoto.includes(currentUser._id)) {
-                    alert('Ya has votado por esta propuesta.');
+                    alert('Reaccionaste a esta propuesta.');
                     return;
                 }
                 propuesta.UsuarioVoto.push(currentUser._id);
@@ -203,25 +229,32 @@ export default {
     }
 };
 </script>
-
 <style scoped>
 .propuesta {
     padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    max-width: 600px;
+    border-radius: 8px;
+    max-width: 100%;
     margin: 20px auto;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.propuesta:hover {
+    transform: scale(1.02); /* Aumenta un poco el tamaño al pasar el ratón */
 }
 
 .propuesta h1 {
-    font-size: 24px;
+    font-size: 28px;
     margin-bottom: 10px;
+    color: #2c3e50; /* Color oscuro */
 }
 
 .propuesta p {
     font-size: 16px;
     margin: 5px 0;
+    color: #34495e; /* Color gris oscuro */
 }
 
 .comentarios {
@@ -229,16 +262,23 @@ export default {
 }
 
 .comentarios h2 {
-    font-size: 20px;
+    font-size: 22px;
     margin-bottom: 10px;
+    color: #2980b9; /* Color azul para los títulos */
 }
 
 .comentario {
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ddd;
     border-radius: 5px;
     margin-bottom: 10px;
-    background-color: #fff;
+    background-color: #f5f5f5;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.comentario:hover {
+    background-color: #e8f6f3; /* Color de fondo claro en hover */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
 .comentario p {
@@ -247,14 +287,23 @@ export default {
 
 form {
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+    border-color: #2980b9; /* Color de borde en foco */
+    outline: none; /* Sin borde de foco por defecto */
 }
 
 button {
@@ -264,9 +313,17 @@ button {
     background-color: #007bff;
     color: #fff;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Color más oscuro en hover */
+    transform: translateY(-2px); /* Mueve el botón hacia arriba al pasar el ratón */
+}
+
+button:disabled {
+    background-color: #ccc; /* Color gris para botones deshabilitados */
+    cursor: not-allowed; /* Cambia el cursor al pasar sobre el botón deshabilitado */
 }
 </style>

@@ -17,7 +17,10 @@
         <li><a href="data.html" class="menu-btn">Programas</a></li>
         <li><a href="#teams" class="menu-btn">Noticias</a></li>
         <li><a href="galery.html" class="menu-btn">Eventos</a></li>
-        <li><a href="galery.html" class="menu-btn">Propuestas</a></li>
+        <li>
+        <NuxtLink to="/PropuestasView" class="menu-btn">Propuestas</NuxtLink>
+        </li>
+
         <li><a href="#contact" class="menu-btn">Contactos</a></li>
       </ul>
     </div>
@@ -124,6 +127,7 @@ const isLoggedIn = computed(() => userStore.user !== null); // Computed que indi
   font-size: 40px;
   cursor: pointer;
   display: none; /* Se mostrará solo en móvil */
+  
 }
 
 /* Scroll up button styling */
