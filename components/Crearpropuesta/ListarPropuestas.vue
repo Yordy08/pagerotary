@@ -72,6 +72,7 @@ const propuestaForm = ref({
 });
 
 const userStore = useUserStore();
+const user = userStore.getUser();
 
 const fetchPropuestas = async () => {
     try {
@@ -83,8 +84,14 @@ const fetchPropuestas = async () => {
         });
         const data = await response.json();
         if (data && Array.isArray(data.body)) {
-            propuestas.value = data.body;
-        }
+            if (user.rol === 'admin') {
+                propuestas.value = data.body;
+            } else {
+                propuestas.value = data.body.filter(e => e.usuarioId === user._id);
+            }
+         
+          
+             }
     } catch (error) {
         console.error('Error al obtener propuestas:', error);
     }
