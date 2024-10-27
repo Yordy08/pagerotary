@@ -1,14 +1,16 @@
 <template>
   <div class="perfil-view">
      <h2>Propuestas</h2>
+    <button v-if="currentView" @click="backtoMain">{{ "<-" }}</button>
+
      <!-- Sección para las vistas dinámicas -->
      <section class="dynamic-view" v-if="currentView">
       <component :is="currentView" />
     </section>
     <!-- Sección de acciones solo visible si no hay vista activa -->
-    <section class="actions" v-if="!currentView">
-      <div class="action" @click="handleAction('crear')">
-        <h2>Crear</h2>
+      <section class="actions" v-if="!currentView">
+     <div class="action" @click="handleAction('crear')">
+       <h2>Crear</h2>
         <p>Agregar nueva propuesta</p>
       </div>
       <div class="action" @click="handleAction('listar')">
@@ -35,12 +37,16 @@ export default {
     };
   },
   methods: {
+   
     handleAction(action) {
       if (action === 'crear') {
         this.currentView = 'CrearPropuestas'; 
       } else if (action === 'listar') {
         this.currentView = 'ListarPropuestas'; 
       }
+    },
+    backtoMain() {
+      this.currentView = null; 
     },
   },
 };
