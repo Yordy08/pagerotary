@@ -4,8 +4,6 @@
         <div class="logo">
           <a href="/">
             <img
-              height="50px"
-              width="100%"
               alt="logo"
               src="https://www.rotary.org/sites/all/themes/rotary_rotaryorg/images/rotary-logo-color-2019-simplified.svg"
             />
@@ -15,7 +13,6 @@
           <i class="fas fa-bars" :class="{ active: isActive }"></i>
         </div>
         <ul class="menu" :class="{ active: isActive }">
-          <!-- Mostrar todos los elementos del menú -->
           <li v-if="isLoggedIn"><NuxtLink class="a" to="/dashboard">Admin</NuxtLink></li>
           <li v-if="isLoggedIn"><NuxtLink class="a" to="/">Inicio</NuxtLink></li>
           <li v-if="isLoggedIn"><NuxtLink class="a" to="/dashboard">Programas</NuxtLink></li>
@@ -23,7 +20,6 @@
           <li v-if="isLoggedIn"><NuxtLink class="a" to="/dashboard">Eventos</NuxtLink></li>
           <li v-if="isLoggedIn"><NuxtLink class="a" to="/dashboard">Propuestas</NuxtLink></li>
           <li v-if="isLoggedIn"><NuxtLink class="a" to="/dashboard">Contactos</NuxtLink></li>
-        
         </ul>
       </div>
     </nav>
@@ -47,7 +43,7 @@
     padding: 1px 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: fixed;
-    width: 95%;
+    width: 100%;
     z-index: 10;
     height: 70px;
     transition: background-color 0.3s ease;
@@ -58,14 +54,17 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 1200px;
+    max-width: 1500px;
     margin: auto;
   }
   
   /* Logo Styling */
   .logo img {
-    height: 50px;
+    height: 50px; /* Ajuste para un logo más pequeño */
     transition: transform 0.3s ease;
+
+  margin-left: 30px; /* Ajuste forzado para mover el menú a la izquierda */
+  margin-top: 12px;
   }
   
   .logo img:hover {
@@ -74,32 +73,43 @@
   
   /* Menu Styling */
   .menu {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    list-style: none;
-  }
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espacio entre los elementos del menú */
+  list-style: none;
+  position: relative; /* Permitir el uso de la propiedad left */
+  left: -70px; /* Ajuste forzado para mover el menú a la izquierda */
+  margin-top: 24px;
+}
+
   
   .menu li {
+  
     position: relative;
+    transition: transform 0.2s ease; /* Añade transición al movimiento */
+    
   }
   
-  .menu li a,
-  .menu li .menu-btn {
+  .menu li:hover {
+    transform: translateX(-5px); /* Mueve el elemento a la izquierda al pasar el ratón */
+  }
+  
+  .menu li a {
     color: #333;
     font-size: 1em;
-    font-weight: 600;
     text-decoration: none;
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 10px 0; /* Aumenta el padding para una mejor área de clic */
+    border-radius: 30px;
     transition: background 0.3s, color 0.3s;
+    list-style: none;
+   
   }
   
-  .menu li a:hover,
-  .menu li .menu-btn:hover {
+  .menu li a:hover {
     color: #fff;
     background: #ff6700; /* Soft Orange for highlight */
     box-shadow: 0 4px 10px rgba(255, 103, 0, 0.3);
+    
   }
   
   /* Mostrar el botón de menú en dispositivos móviles */
@@ -121,7 +131,7 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 100%;
+    top: 70px; /* Asegúrate de que el menú se coloque justo debajo de la navbar */
     left: 0;
     right: 0;
     background: #f9f9f9;
@@ -146,7 +156,7 @@
   }
   
   .menu li a:hover::after {
-    width: 100%; /* Grows underline on hover */
+    width: 80%; /* Grows underline on hover */
   }
   
   /* Responsive Design */
@@ -162,6 +172,15 @@
   
     .menu-btn {
       display: block; /* Show menu button on small screens */
+      margin-right: 20px; /* Ajuste para mejor separación del logo */
+      margin-top: 10px;
+    }
+  
+    /* Ajuste para el logo en móviles */
+    .logo img {
+      height: 40px; /* Reducir tamaño del logo en móvil */
+      margin-top: 15px;
+      margin-left: 20px;
     }
   }
   </style>

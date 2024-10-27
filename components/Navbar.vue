@@ -221,6 +221,18 @@ const isLoggedIn = computed(() => userStore.user !== null); // Computed que indi
   .navbar .menu li a:hover {
     background-color: #e07c1d; /* Efecto hover */
   }
+  .menu-btn {
+      display: block; /* Show menu button on small screens */
+      margin-right: 20px; /* Ajuste para mejor separación del logo */
+      margin-top: 10px;
+    }
+  
+    /* Ajuste para el logo en móviles */
+    .logo img {
+      height: 50px; /* Reducir tamaño del logo en móvil */
+      margin-top: 15px;
+      margin-left: 10px;
+    }
 }
 
 </style>

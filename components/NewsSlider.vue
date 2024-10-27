@@ -4,14 +4,13 @@
       <h2 class="title">Últimas Noticias</h2>
       <div class="slider">
         <button class="prev" @click="prevSlide">&#10094;</button>
-        <div class="cards" :style="{ transform: `translateX(-${currentIndex * 100}%)` }" 
+        <div class="cards" :style="{ transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)` }"
              @touchstart="handleTouchStart" 
              @touchmove="handleTouchMove" 
              @touchend="handleTouchEnd">
-             <div v-if="loading" class="loading">Cargando...</div>
-<div v-else-if="noticias.length === 0" class="no-noticias">No hay noticias disponibles.</div>
-<div v-else class="card" v-for="noticia in noticias" :key="noticia.id" @click="irADetalle(noticia.id)">
-
+          <div v-if="loading" class="loading">Cargando...</div>
+          <div v-else-if="noticias.length === 0" class="no-noticias">No hay noticias disponibles.</div>
+          <div v-else class="card" v-for="noticia in noticias" :key="noticia._id" @click="irADetalle(noticia._id)">
             <img :src="noticia.imagen" alt="Imagen de la noticia" />
             <div class="card-content">
               <h3>{{ noticia.titulo }}</h3>
@@ -34,7 +33,7 @@ import { useRouter } from 'vue-router';
 const noticias = ref([]);
 const loading = ref(true);
 const currentIndex = ref(0);
-const slidesToShow = ref(4); // Se cambia dinámicamente con el ancho de la pantalla
+const slidesToShow = ref(4);
 const router = useRouter();
 
 const fetchNoticias = async () => {
@@ -45,11 +44,9 @@ const fetchNoticias = async () => {
         'Content-Type': 'application/json',
       },
     });
-
     const data = await response.json();
     if (data && Array.isArray(data.body)) {
       noticias.value = data.body;
-      console.log(noticias.value); // Verifica los datos aquí
     }
   } catch (error) {
     console.error('Error al obtener noticias:', error);
@@ -57,11 +54,12 @@ const fetchNoticias = async () => {
     loading.value = false;
   }
 };
+
 const nextSlide = () => {
-  if (currentIndex.value < noticias.value.length - 1) {
+  if (currentIndex.value < noticias.value.length - slidesToShow.value) {
     currentIndex.value++;
   } else {
-    currentIndex.value = 0; // Reinicia al primer slide si llegas al final
+    currentIndex.value = 0;
   }
 };
 
@@ -69,28 +67,28 @@ const prevSlide = () => {
   if (currentIndex.value > 0) {
     currentIndex.value--;
   } else {
-    currentIndex.value = noticias.value.length - 1; // Regresa al último slide si estás en el primero
+    currentIndex.value = noticias.value.length - slidesToShow.value;
   }
 };
-
 
 const irADetalle = (id) => {
+  console.log('Navegando a la noticia con ID:', id); // Verifica que el ID es correcto
   if (id) {
-    router.push(`/noticia/${id}`);
+    router.push({ name: 'Notis-id', params: { id } }); // Cambia a 'Notis-id' si tienes el nombre definido, o simplemente utiliza la ruta
   }
 };
+
 
 const recortarContenido = (contenido) => {
   const palabras = contenido.split(' ');
   return palabras.slice(0, 28).join(' ') + (palabras.length > 28 ? '...' : '');
 };
 
-// Cambiar la cantidad de slides a mostrar dependiendo del tamaño de la pantalla
 const ajustarSlidesToShow = () => {
   slidesToShow.value = window.innerWidth <= 768 ? 1 : 4;
 };
 
-// Variables para el swipe
+// Manejo de swipe
 let touchStartX = 0;
 let touchEndX = 0;
 
@@ -104,10 +102,8 @@ const handleTouchMove = (event) => {
 
 const handleTouchEnd = () => {
   if (touchStartX > touchEndX + 50) {
-    // Swipe a la izquierda
     nextSlide();
   } else if (touchStartX < touchEndX - 50) {
-    // Swipe a la derecha
     prevSlide();
   }
 };
@@ -118,6 +114,8 @@ onMounted(() => {
   window.addEventListener('resize', ajustarSlidesToShow);
 });
 </script>
+
+
 
 <style scoped>
 .eventos-slider {
