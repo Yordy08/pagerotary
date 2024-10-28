@@ -36,9 +36,10 @@ import { useRouter } from 'vue-router';
 const eventos = ref([]);
 const loading = ref(true);
 const currentIndex = ref(0);
-const slidesToShow = ref(4); // Por defecto, se muestra 4 tarjetas en escritorio
+const slidesToShow = ref(4);
 const router = useRouter();
 
+// Función para obtener los eventos
 const fetchEventos = async () => {
   try {
     const response = await fetch('/api/Eventos/Select', {
@@ -47,12 +48,9 @@ const fetchEventos = async () => {
         'Content-Type': 'application/json',
       },
     });
-
     const data = await response.json();
     if (data && Array.isArray(data.body)) {
       eventos.value = data.body;
-    } else {
-      console.warn('No se encontraron eventos o la estructura de datos no es válida.');
     }
   } catch (error) {
     console.error('Error al obtener eventos:', error);
@@ -62,35 +60,42 @@ const fetchEventos = async () => {
 };
 
 // Funciones para navegar en el slider
-const prevSlide = () => {
-  if (currentIndex.value > 0) {
-    currentIndex.value--;
-  } else {
-    currentIndex.value = eventos.value.length - 1; // Regresar al último slide si estás en el primero
-  }
-};
-
 const nextSlide = () => {
   if (currentIndex.value < Math.ceil(eventos.value.length / slidesToShow.value) - 1) {
     currentIndex.value++;
   } else {
-    currentIndex.value = 0; // Reinicia al primer slide si llegas al final
+    currentIndex.value = 0;
+  }
+};
+
+const prevSlide = () => {
+  if (currentIndex.value > 0) {
+    currentIndex.value--;
+  } else {
+    currentIndex.value = Math.ceil(eventos.value.length / slidesToShow.value) - 1; // Regresar al último slide
   }
 };
 
 // Función para navegar a la vista de detalle del evento
 const irADetalle = (id) => {
+  console.log('Navegando al evento con ID:', id);
   if (id) {
-    router.push(`/evento/${id}`); // Navega a la vista de detalle con el ID
+    router.push(`/Evento/${id}`); // Usa la ruta directa para ir a la página del evento
   }
 };
 
+// Función para recortar la descripción
 const recortarDescripcion = (descripcion) => {
   const palabras = descripcion.split(' ');
-  return palabras.slice(0, 28).join(' ') + (palabras.length > 28 ? '...' : ''); // Muestra solo 28 palabras
+  return palabras.slice(0, 28).join(' ') + (palabras.length > 28 ? '...' : '');
 };
 
-// Variables para el swipe
+// Ajustar la cantidad de slides según el tamaño de la pantalla
+const ajustarSlidesToShow = () => {
+  slidesToShow.value = window.innerWidth <= 768 ? 1 : 4;
+};
+
+// Manejo de swipe
 let touchStartX = 0;
 let touchEndX = 0;
 
@@ -104,67 +109,56 @@ const handleTouchMove = (event) => {
 
 const handleTouchEnd = () => {
   if (touchStartX > touchEndX + 50) {
-    // Swipe a la izquierda
     nextSlide();
   } else if (touchStartX < touchEndX - 50) {
-    // Swipe a la derecha
     prevSlide();
   }
 };
 
+// Montaje del componente
 onMounted(() => {
   fetchEventos();
   ajustarSlidesToShow();
   window.addEventListener('resize', ajustarSlidesToShow);
 });
-
-const ajustarSlidesToShow = () => {
-  if (window.innerWidth < 768) {
-    slidesToShow.value = 1; // 1 tarjeta en móviles
-  } else if (window.innerWidth < 1024) {
-    slidesToShow.value = 2; // 2 tarjetas en tabletas
-  } else {
-    slidesToShow.value = 4; // 4 tarjetas en escritorio
-  }
-};
 </script>
 
 <style scoped>
 .eventos-slider {
   padding: 20px;
-  position: relative; /* Necesario para posicionar las flechas */
+  position: relative;
 }
 
 .slider {
   display: flex;
-  align-items: center; /* Centrar verticalmente el contenido */
-  overflow: hidden; /* Asegura que no se desborde el contenido */
+  align-items: center;
+  overflow: hidden;
 }
 
 .cards {
   display: flex;
-  transition: transform 0.5s ease; /* Animación para el cambio de slides */
-  min-width: 100%; /* Asegura que solo una tarjeta ocupe el 100% del slider */
+  transition: transform 0.5s ease;
+  min-width: 100%;
 }
 
 .card {
-  width: 100%; /* Cada tarjeta ocupa todo el ancho del contenedor */
+  width: 100%;
   background: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  cursor: pointer; /* Cambia el cursor al pasar sobre la tarjeta */
-  transition: transform 0.3s; /* Transición suave al hacer hover */
+  cursor: pointer;
+  transition: transform 0.3s;
 }
 
 .card:hover {
-  transform: scale(1.05); /* Efecto de aumento al pasar el mouse */
+  transform: scale(1.05);
 }
 
 .card img {
   width: 100%;
-  height: 200px; /* Fijar altura de la imagen para que todas tengan el mismo tamaño */
-  object-fit: cover; /* Mantener la relación de aspecto */
+  height: 200px;
+  object-fit: cover;
 }
 
 .prev,
@@ -173,14 +167,14 @@ const ajustarSlidesToShow = () => {
   border: none;
   font-size: 2em;
   cursor: pointer;
-  color: #F21651; /* Color de las flechas */
+  color: #F21651;
   padding: 10px;
-  z-index: 1; /* Para que las flechas estén encima del contenido */
+  z-index: 1;
 }
 
 .prev:hover,
 .next:hover {
-  color: #C51041; /* Color de las flechas al pasar el mouse */
+  color: #C51041;
 }
 
 .loading,
@@ -192,40 +186,40 @@ const ajustarSlidesToShow = () => {
 /* Estilos para mostrar 4 cards en desktop */
 @media (min-width: 1024px) {
   .cards {
-    gap: 20px; /* Espacio entre las cards */
+    gap: 20px;
   }
 
   .card {
-    min-width: calc(25% - 20px); /* Ajustar para 4 cards en desktop */
+    min-width: calc(25% - 20px);
   }
 
   .slider {
-    width: 100%; /* Asegúrate de que el slider ocupe el ancho completo */
-    overflow: hidden; /* Oculta el contenido que no está en vista */
+    width: 100%;
+    overflow: hidden;
   }
 }
 
 /* Estilo para tabletas */
 @media (min-width: 768px) and (max-width: 1024px) {
   .cards {
-    gap: 20px; /* Espacio entre las cards */
+    gap: 20px;
   }
 
   .card {
-    min-width: calc(50% - 20px); /* Ajustar para 2 cards en tabletas */
+    min-width: calc(50% - 20px);
   }
 }
 
 /* Estilo para móvil */
 @media (max-width: 768px) {
   .cards {
-    flex-direction: row; /* Mantener la dirección en fila */
-    gap: 15px; /* Reduce el espacio entre las cards */
+    flex-direction: row;
+    gap: 15px;
   }
 
   .card {
-    max-width: 100%; /* Las cards ocupan todo el ancho */
-    flex: 0 0 auto; /* Evitar que las cards se compriman */
+    max-width: 100%;
+    flex: 0 0 auto;
   }
 }
 </style>

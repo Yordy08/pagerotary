@@ -1,7 +1,9 @@
 <template>
+    <div>
+        <Nav/>
     
     <section class="propuestas-list">
-        <Nav/>
+        
         <div class="max-width"> 
         <br>
           <br>
@@ -28,8 +30,10 @@
         <br>
         <br>
         <br>
-        <Footer/>
+        
     </section>
+    <Footer/>
+</div>
 </template>
 
 <script setup>
@@ -128,12 +132,20 @@ onMounted(() => {
 @import '~/public/css/index.css';
 .propuestas-list {
     padding: 20px;
+   
+    border-radius: 8px;
+    max-width: 70%;
+    margin: 20px auto;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
 .propuestas-container {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    
 }
 
 .propuesta {
@@ -147,6 +159,7 @@ onMounted(() => {
 
 .propuesta:hover {
     transform: translateY(-5px);
+    transform: scale(1.02); /* Aumenta un poco el tamaño al pasar el ratón */
 }
 
 .propuesta-content h3 {

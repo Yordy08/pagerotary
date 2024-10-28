@@ -1,10 +1,13 @@
 <template>
-    <div class="propuesta">
+    <div>
         <Nav/>
         <br>
         <br>
         <br>
         <br>
+    
+    <div class="propuesta">
+       
         <h1>{{ propuesta.titulo }}</h1>
         <p>{{ propuesta.descripcion }}</p>
         <p><strong>Ubicación:</strong> {{ propuesta.ubicacion }}</p>
@@ -48,10 +51,12 @@
    <br>
    <br>
    <br>
-   <Footer/>
+   
 
 
     </div>
+    <Footer/>
+</div>
 </template>
 
 <script>
@@ -234,7 +239,7 @@ export default {
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    max-width: 100%;
+    max-width: 70%;
     margin: 20px auto;
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

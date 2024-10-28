@@ -105,12 +105,7 @@
    
   }
   
-  .menu li a:hover {
-    color: #fff;
-    background: #ff6700; /* Soft Orange for highlight */
-    box-shadow: 0 4px 10px rgba(255, 103, 0, 0.3);
-    
-  }
+
   
   /* Mostrar el botón de menú en dispositivos móviles */
   .menu-btn {
