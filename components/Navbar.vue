@@ -15,8 +15,12 @@
         
         <li><a href="index.html" class="menu-btn">Inicio</a></li>
         <li><a href="data.html" class="menu-btn">Programas</a></li>
-        <li><a href="#teams" class="menu-btn">Noticias</a></li>
-        <li><a href="galery.html" class="menu-btn">Eventos</a></li>
+        <li>
+        <NuxtLink to="/NotiViews" class="menu-btn">Noticias</NuxtLink>
+        </li>
+        <li>
+        <NuxtLink to="/EventViews" class="menu-btn">Eventos</NuxtLink>
+        </li>
         <li>
         <NuxtLink to="/PropuestasView" class="menu-btn">Propuestas</NuxtLink>
         </li>

@@ -1,25 +1,22 @@
 <template>
   <section class="eventos-slider">
     <div class="max-width">
-      <h2 class="title">Últimos Eventos</h2>
+      <h2 class="title">Próximos Eventos</h2>
       <div class="slider">
         <button class="prev" @click="prevSlide">&#10094;</button>
-        <div
-          class="cards"
-          :style="{ transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)` }"
-          @touchstart="handleTouchStart"
-          @touchmove="handleTouchMove"
-          @touchend="handleTouchEnd"
-        >
+        <div class="cards" :style="{ transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)` }"
+             @touchstart="handleTouchStart" 
+             @touchmove="handleTouchMove" 
+             @touchend="handleTouchEnd">
           <div v-if="loading" class="loading">Cargando...</div>
           <div v-else-if="eventos.length === 0" class="no-eventos">No hay eventos disponibles.</div>
-          <div v-else class="card" v-for="evento in eventos" :key="evento.id" @click="irADetalle(evento.id)">
-            <img v-if="evento.imagen" :src="evento.imagen" alt="Imagen del evento" />
+          <div v-else class="card" v-for="evento in eventos" :key="evento._id" @click="irADetalle(evento._id)">
+            <img :src="evento.imagen" alt="Imagen del evento" />
             <div class="card-content">
               <h3>{{ evento.nombre }}</h3>
-              <p>{{ recortarDescripcion(evento.descripcion) }}</p>
+              <p>{{ recortarContenido(evento.descripcion) }}</p>
               <span>Fecha: {{ new Date(evento.fecha).toLocaleDateString() }}</span>
-              <span>Ubicación: {{ evento.ubicacion }}</span>
+              <span v-if="evento.ubicacion">Ubicación: {{ evento.ubicacion }}</span>
             </div>
           </div>
         </div>
@@ -39,7 +36,6 @@ const currentIndex = ref(0);
 const slidesToShow = ref(4);
 const router = useRouter();
 
-// Función para obtener los eventos
 const fetchEventos = async () => {
   try {
     const response = await fetch('/api/Eventos/Select', {
@@ -59,9 +55,8 @@ const fetchEventos = async () => {
   }
 };
 
-// Funciones para navegar en el slider
 const nextSlide = () => {
-  if (currentIndex.value < Math.ceil(eventos.value.length / slidesToShow.value) - 1) {
+  if (currentIndex.value < eventos.value.length - slidesToShow.value) {
     currentIndex.value++;
   } else {
     currentIndex.value = 0;
@@ -72,25 +67,22 @@ const prevSlide = () => {
   if (currentIndex.value > 0) {
     currentIndex.value--;
   } else {
-    currentIndex.value = Math.ceil(eventos.value.length / slidesToShow.value) - 1; // Regresar al último slide
+    currentIndex.value = eventos.value.length - slidesToShow.value;
   }
 };
 
-// Función para navegar a la vista de detalle del evento
 const irADetalle = (id) => {
-  console.log('Navegando al evento con ID:', id);
+  console.log('Navegando al evento con ID:', id); // Verifica que el ID es correcto
   if (id) {
-    router.push(`/Evento/${id}`); // Usa la ruta directa para ir a la página del evento
+    router.push(`/Evento/${id}`); // Ajusta la ruta si es necesario
   }
 };
 
-// Función para recortar la descripción
-const recortarDescripcion = (descripcion) => {
-  const palabras = descripcion.split(' ');
+const recortarContenido = (contenido) => {
+  const palabras = contenido.split(' ');
   return palabras.slice(0, 28).join(' ') + (palabras.length > 28 ? '...' : '');
 };
 
-// Ajustar la cantidad de slides según el tamaño de la pantalla
 const ajustarSlidesToShow = () => {
   slidesToShow.value = window.innerWidth <= 768 ? 1 : 4;
 };
@@ -115,7 +107,6 @@ const handleTouchEnd = () => {
   }
 };
 
-// Montaje del componente
 onMounted(() => {
   fetchEventos();
   ajustarSlidesToShow();
@@ -183,7 +174,6 @@ onMounted(() => {
   width: 100%;
 }
 
-/* Estilos para mostrar 4 cards en desktop */
 @media (min-width: 1024px) {
   .cards {
     gap: 20px;
@@ -199,7 +189,6 @@ onMounted(() => {
   }
 }
 
-/* Estilo para tabletas */
 @media (min-width: 768px) and (max-width: 1024px) {
   .cards {
     gap: 20px;
@@ -210,7 +199,6 @@ onMounted(() => {
   }
 }
 
-/* Estilo para móvil */
 @media (max-width: 768px) {
   .cards {
     flex-direction: row;

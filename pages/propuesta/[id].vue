@@ -239,7 +239,7 @@ export default {
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    max-width: 70%;
+    max-width: 90%;
     margin: 20px auto;
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -253,13 +253,13 @@ export default {
 .propuesta h1 {
     font-size: 28px;
     margin-bottom: 10px;
-    color: #2c3e50; /* Color oscuro */
+    color: #2c3e50;
 }
 
 .propuesta p {
     font-size: 16px;
     margin: 5px 0;
-    color: #34495e; /* Color gris oscuro */
+    color: #34495e;
 }
 
 .comentarios {
@@ -269,7 +269,7 @@ export default {
 .comentarios h2 {
     font-size: 22px;
     margin-bottom: 10px;
-    color: #2980b9; /* Color azul para los títulos */
+    color: #2980b9;
 }
 
 .comentario {
@@ -282,8 +282,8 @@ export default {
 }
 
 .comentario:hover {
-    background-color: #e8f6f3; /* Color de fondo claro en hover */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    background-color: #e8f6f3;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .comentario p {
@@ -298,17 +298,29 @@ form {
 
 textarea {
     width: 100%;
+    max-width: 100%;
+    min-height: 100px; /* Altura mínima para mejorar la experiencia en móviles */
     padding: 12px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
     transition: border-color 0.3s ease;
+    box-sizing: border-box; /* Asegura que el padding no extienda el ancho total */
 }
 
 textarea:focus {
     border-color: #2980b9; /* Color de borde en foco */
     outline: none; /* Sin borde de foco por defecto */
+}
+
+/* Media query para pantallas pequeñas (móviles) */
+@media (max-width: 600px) {
+    textarea {
+        padding: 10px;
+        font-size: 16px; /* Aumenta el tamaño del texto para mejor legibilidad en móviles */
+        min-height: 120px; /* Aumenta la altura mínima para facilitar la escritura */
+    }
 }
 
 button {
@@ -323,12 +335,68 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3; /* Color más oscuro en hover */
-    transform: translateY(-2px); /* Mueve el botón hacia arriba al pasar el ratón */
+    background-color: #0056b3;
+    transform: translateY(-2px);
 }
 
 button:disabled {
-    background-color: #ccc; /* Color gris para botones deshabilitados */
-    cursor: not-allowed; /* Cambia el cursor al pasar sobre el botón deshabilitado */
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .propuesta {
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .propuesta h1 {
+        font-size: 24px;
+    }
+
+    .propuesta p {
+        font-size: 14px;
+    }
+
+    .comentarios h2 {
+        font-size: 20px;
+    }
+
+    textarea {
+        font-size: 13px;
+    }
+
+    button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .propuesta {
+        padding: 10px;
+    }
+
+    .propuesta h1 {
+        font-size: 20px;
+    }
+
+    .propuesta p {
+        font-size: 12px;
+    }
+
+    .comentarios h2 {
+        font-size: 18px;
+    }
+
+    textarea {
+        font-size: 12px;
+    }
+
+    button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
 }
 </style>
